@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
 import { ENV } from '../config/env.js'
 import { getCollection } from '../../db.js'
 import { isDbConnected } from '../config/database.js'
@@ -41,23 +42,37 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
     let userDetails: AuthUser | null = null
 
     if (isDbConnected()) {
-      const user = await User.findById(decoded.id).lean()
-      if (user) {
-        userDetails = {
-          id: String(user._id),
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          avatar: user.avatar,
-          title: user.title,
+      try {
+        let user: any = null
+        if (decoded.id && mongoose.isValidObjectId(decoded.id)) {
+          user = await User.findById(decoded.id).lean()
         }
+        if (!user && decoded.email) {
+          user = await User.findOne({ email: decoded.email.toLowerCase() }).lean()
+        }
+        if (user) {
+          userDetails = {
+            id: String(user._id),
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            avatar: user.avatar,
+            title: user.title,
+          }
+        }
+      } catch (dbErr) {
+        console.warn('MongoDB user lookup failed in authenticateToken, falling back to local store:', dbErr)
       }
     }
 
     if (!userDetails) {
       // Check local store fallback
       const localUsers = getCollection('users')
-      const localUser = localUsers.find((u: any) => u.id === decoded.id || u.email.toLowerCase() === decoded.email.toLowerCase())
+      const localUser = localUsers.find(
+        (u: any) =>
+          u.id === decoded.id ||
+          (decoded.email && u.email.toLowerCase() === decoded.email.toLowerCase())
+      )
       if (localUser) {
         userDetails = {
           id: localUser.id,
