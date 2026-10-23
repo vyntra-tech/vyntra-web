@@ -498,7 +498,7 @@ export default function Contact() {
 
                   {/* 5. Project Budget (Optional) */}
                   <FormControl id="budget" isInvalid={!!errors.budget}>
-                    <FormLabel isRequired={false}>Project Budget</FormLabel>
+                    <FormLabel>Project Budget</FormLabel>
                     <Select
                       name="budget"
                       value={formData.budget}

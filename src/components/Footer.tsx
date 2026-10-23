@@ -269,7 +269,10 @@ export default function Footer() {
         {/* 3. Bottom Copyright & Credits Bar */}
         <div className="footer-bottom-bar footer-reveal">
           <p className="footer-copyright">
-            © {new Date().getFullYear()} VYNTRA Technologies. All rights reserved.
+            © {new Date().getFullYear()} VYNTRA Technologies. All rights reserved. ·{' '}
+            <a href="/admin/dashboard" style={{ color: '#06B6D4', textDecoration: 'none' }}>
+              Admin Portal
+            </a>
           </p>
           <div className="footer-bottom-tag">
             <Sparkles size={13} className="footer-tag-sparkle" />

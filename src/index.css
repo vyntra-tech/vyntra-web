@@ -1,15 +1,15 @@
-:root{color-scheme:dark;--bg:#0B0B0D;--bg2:#151519;--tx:#F5F5F5;--mu:#A1A1AA;--pu:#8B5CF6;--cy:#22D3EE;--ln:rgba(255,255,255,.1);--d:'Space Grotesk','Helvetica Neue',Arial,sans-serif;--b:'Inter',system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{color-scheme:dark;--bg:#04060B;--bg2:#080C16;--card-bg:#0A0F1D;--tx:#F8FAFC;--mu:#94A3B8;--pu:#7C3AED;--cy:#06B6D4;--ln:rgba(255,255,255,.07);--d:'Space Grotesk','Helvetica Neue',Arial,sans-serif;--b:'Inter',system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-behavior:smooth;scroll-padding-top:70px}
 body{margin:0;background:var(--bg);color:var(--tx);font:400 1rem/1.65 var(--b);overflow-x:hidden}
 h1,h2,h3{font-family:var(--d);margin:0;line-height:1;letter-spacing:-.03em}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--cy);outline-offset:3px}
-.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
-section{padding:clamp(5rem,12vw,10rem) 0;position:relative}
-.lab{color:var(--cy);font-size:.85rem;letter-spacing:.04em;margin:0 0 1.2rem}
-h2{font-size:clamp(2.2rem,6vw,5rem);font-weight:700;max-width:16ch}
-p.lead{color:var(--mu);max-width:58ch;font-size:1.05rem}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(1.25rem,3.5vw,2.5rem)}
+section{padding:clamp(3.25rem,5.5vw,5.5rem) 0;position:relative}
+.lab{color:var(--cy);font-size:.78rem;letter-spacing:.08em;margin:0 0 .85rem;text-transform:uppercase;font-weight:600}
+h2{font-size:clamp(2rem,4.2vw,3.35rem);font-weight:700;max-width:18ch;line-height:1.15}
+p.lead{color:var(--mu);max-width:58ch;font-size:1rem;line-height:1.65}
 /* nav */
 nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
 nav.s{background:rgba(11,11,13,.85);backdrop-filter:blur(14px);border-color:var(--ln)}
@@ -493,21 +493,127 @@ html.lenis, html.lenis body {
 @media(max-width:860px){.sc{grid-template-columns:1fr;gap:1rem}.sc ul{grid-template-columns:1fr}}
 /* products + work */
 .tag{display:inline-block;font-size:.78rem;color:var(--mu);border:1px dashed var(--mu);border-radius:4px;padding:.1rem .5rem;margin-bottom:1rem}
-.cards{display:grid;grid-template-columns:repeat(12,1fr);gap:1.5rem;margin-top:4rem}
-.card{grid-column:span 6;border:1px solid var(--ln);background:var(--bg2);display:flex;flex-direction:column;overflow:hidden;border-radius:10px;transition:border-color .3s,transform .3s}
-.card:hover{border-color:rgba(34,211,238,.35);transform:translateY(-3px)}
-.pv{aspect-ratio:16/9;position:relative;overflow:hidden;background:linear-gradient(135deg,#1d1530,#0f2530)}
-.pv img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.card:hover .pv img{transform:scale(1.05)}
-.pv .mock{position:absolute;inset:12% 10%;border:1px solid var(--ln);border-radius:8px;background:rgba(11,11,13,.7);padding:12px;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-.card:hover .mock{transform:scale(1.05)}
-.mock b{display:block;height:8px;border-radius:4px;background:var(--ln);margin-bottom:8px;width:60%}
-.mock b:nth-child(2){width:85%;background:rgba(139,92,246,.5)}.mock b:nth-child(3){width:40%;background:rgba(34,211,238,.5)}
-.cb{padding:1.5rem 1.5rem 1.8rem}
-.cb h3{font-size:1.6rem;margin-bottom:.6rem}
-.cb p{color:var(--mu);margin:0 0 1rem;font-size:.95rem}
-.tg{display:flex;flex-wrap:wrap;gap:.4rem;font-size:.8rem;color:var(--cy)}
-@media(max-width:860px){.card,.card:nth-child(n){grid-column:span 12}}
+/* Selected Work Projects Grid - Premium Compact Architecture */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.15rem;
+  margin-top: 2.25rem;
+}
+@media (max-width: 1080px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+  }
+}
+@media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+.card {
+  background: #080D1A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 8px 24px -8px rgba(0, 0, 0, 0.65);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.card:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -12px rgba(124, 58, 237, 0.28), 0 0 22px -5px rgba(6, 182, 212, 0.18);
+}
+.pv {
+  aspect-ratio: 16 / 10;
+  max-height: 155px;
+  position: relative;
+  overflow: hidden;
+  background: #050811;
+}
+.pv img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card:hover .pv img {
+  transform: scale(1.06);
+}
+.card-cat-badge {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  z-index: 2;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #22D3EE;
+  background: rgba(5, 8, 17, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 999px;
+  padding: 0.16rem 0.55rem;
+}
+.cb {
+  padding: 0.95rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.cb h3 {
+  font-size: 1.06rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+.cb p {
+  color: #94A3B8;
+  font-size: 0.81rem;
+  line-height: 1.5;
+  margin: 0 0 0.8rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+.tg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+.tg span {
+  font-size: 0.67rem;
+  font-weight: 500;
+  color: #C4B5FD;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+}
+.card-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #22D3EE;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.card-cta-link:hover {
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
 
 /* ==========================================================================
    VYNTRA TECHNOLOGY VISION SECTION
@@ -519,18 +625,19 @@ html.lenis, html.lenis body {
 .vision-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 3.5rem;
+  gap: 1.15rem;
+  margin-top: 2.25rem;
 }
 .vision-card {
-  background: var(--bg2);
-  border: 1px solid var(--ln);
-  border-radius: 12px;
-  padding: 2.2rem 1.8rem;
+  background: #080D1A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 13px;
+  padding: 1.6rem 1.45rem;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
   transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 .vision-card::before {
@@ -547,7 +654,7 @@ html.lenis, html.lenis body {
 .vision-card:hover {
   transform: translateY(-4px);
   border-color: rgba(34, 211, 238, 0.35);
-  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6);
 }
 .vision-card:hover::before {
   opacity: 1;
@@ -555,38 +662,38 @@ html.lenis, html.lenis body {
 .vision-badge {
   display: inline-block;
   align-self: flex-start;
-  font: 500 0.76rem var(--d);
+  font: 600 0.7rem var(--d);
   color: var(--cy);
   letter-spacing: 0.08em;
-  padding: 0.25rem 0.65rem;
+  padding: 0.2rem 0.55rem;
   background: rgba(34, 211, 238, 0.08);
   border: 1px solid rgba(34, 211, 238, 0.2);
   border-radius: 99px;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1rem;
 }
 .vision-card h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  margin-bottom: 0.55rem;
   color: var(--tx);
 }
 .vision-card p {
   color: var(--mu);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  margin: 0 0 1.5rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin: 0 0 1.15rem;
 }
 .vision-list {
   margin: auto 0 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--ln);
-  padding-top: 1.2rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.45rem;
 }
 .vision-list li {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: #d4d4d8;
   position: relative;
   padding-left: 1.2rem;
@@ -603,8 +710,8 @@ html.lenis, html.lenis body {
   box-shadow: 0 0 8px var(--pu);
 }
 .vision-banner {
-  margin-top: 3.5rem;
-  padding: 2.2rem;
+  margin-top: 2.5rem;
+  padding: 1.6rem 1.4rem;
   border-radius: 12px;
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(34, 211, 238, 0.05));
   border: 1px solid var(--ln);
@@ -612,11 +719,11 @@ html.lenis, html.lenis body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 .vision-banner-tagline {
   font-family: var(--d);
-  font-size: clamp(1.4rem, 3.2vw, 2.4rem);
+  font-size: clamp(1.3rem, 2.8vw, 2.1rem);
   font-weight: 700;
   letter-spacing: 0.15em;
   background: linear-gradient(120deg, #fff 20%, var(--cy) 65%, var(--pu) 100%);
@@ -635,7 +742,7 @@ html.lenis, html.lenis body {
 }
 .vision-banner-sub {
   color: var(--mu);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin: 0;
 }
 @media (max-width: 860px) {
@@ -653,28 +760,29 @@ html.lenis, html.lenis body {
 .future-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 3.5rem;
+  gap: 1.15rem;
+  margin-top: 2.25rem;
 }
 .future-card {
-  background: var(--bg);
-  border: 1px solid var(--ln);
-  border-radius: 12px;
+  background: #080D1A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 13px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
   transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 .future-card:hover {
   transform: translateY(-4px);
   border-color: rgba(139, 92, 246, 0.4);
-  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6);
 }
 .product-preview {
-  background: #0d0e12;
+  background: #050811;
   border-bottom: 1px solid var(--ln);
-  padding: 1rem;
-  min-height: 165px;
+  padding: 0.75rem;
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -726,7 +834,7 @@ html.lenis, html.lenis body {
 .term-line.info { color: #38bdf8; }
 .term-line.active { color: #c084fc; }
 .future-card-body {
-  padding: 1.5rem 1.6rem 1.8rem;
+  padding: 1.15rem 1.25rem 1.35rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1019,54 +1127,47 @@ html.lenis, html.lenis body {
 }
 
 /* ===========================
-   VYNTRA TEAM SECTION
-   Refined Compact Single-Line Skyline Wave + LinkedIn
+   VYNTRA TEAM SECTION (100% RESPONSIVE)
 =========================== */
 .team-sec {
   position: relative;
   overflow: hidden;
-  padding: clamp(4.5rem, 8vw, 6.5rem) 0;
+  padding: clamp(3.25rem, 5.5vw, 5.5rem) 0;
+  background: var(--bg2);
 }
 
 .team-wave-container {
-  margin-top: 2.75rem;
+  margin-top: 2.25rem;
   width: 100%;
-  overflow-x: auto;
-  padding: 1rem 0.25rem 1.5rem;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.team-wave-container::-webkit-scrollbar {
-  display: none;
+  position: relative;
 }
 
 .team-wave-track {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.75rem, 1.3vw, 1.15rem);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: end;
+  gap: 0.85rem;
   width: 100%;
-  max-width: 1140px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
-/* Base Card Style: Full Cover Photo + Link */
+/* Base Card Style: Full Cover Photo */
 .team-wave-card {
   position: relative;
-  border-radius: 18px;
+  border-radius: 14px;
   overflow: hidden;
-  background: #09090c;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.75);
+  background: #080D1A;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 10px 24px -8px rgba(0, 0, 0, 0.7);
   text-decoration: none;
   color: inherit;
   display: block;
   cursor: pointer;
   user-select: none;
   outline: none;
+  width: 100%;
   transition:
-    flex 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
     transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
     border-color 0.3s ease,
     box-shadow 0.3s ease,
@@ -1078,42 +1179,53 @@ html.lenis, html.lenis body {
   outline-offset: 3px;
 }
 
-/* Compact Varied Heights (Wave Skyline: Koi Bada, Koi Chota) */
+/* Compact Varied Heights (Wave Skyline: Koi Bada, Koi Chota on Desktop) */
 .team-wave-card.wave-hero {
-  flex: 1.15;
-  height: 410px;
+  height: 355px;
 }
 
 .team-wave-card.wave-big {
-  flex: 1.08;
-  height: 380px;
+  height: 335px;
 }
 
 .team-wave-card.wave-mid {
-  flex: 1.02;
-  height: 350px;
+  height: 315px;
 }
 
 .team-wave-card.wave-small {
-  flex: 0.92;
-  height: 310px;
+  height: 295px;
 }
 
-/* Hover & Active States: Gentle Expand & Glow */
-.team-wave-card:hover,
-.team-wave-card.is-active {
-  flex: 1.35;
-  transform: translateY(-6px);
-  border-color: rgba(6, 182, 212, 0.55);
-  box-shadow:
-    0 20px 42px -10px rgba(0, 0, 0, 0.92),
-    0 0 28px rgba(6, 182, 212, 0.22);
-  z-index: 5;
-}
+/* Desktop Hover States */
+@media (hover: hover) and (min-width: 1024px) {
+  .team-wave-card:hover,
+  .team-wave-card.is-active {
+    transform: translateY(-6px);
+    border-color: rgba(6, 182, 212, 0.55);
+    box-shadow:
+      0 20px 38px -10px rgba(0, 0, 0, 0.9),
+      0 0 24px rgba(6, 182, 212, 0.2);
+    z-index: 5;
+  }
 
-/* Soft Focus: Sibling Cards Dim Gently */
-.team-wave-track:hover .team-wave-card:not(:hover) {
-  opacity: 0.78;
+  .team-wave-track:hover .team-wave-card:not(:hover) {
+    opacity: 0.82;
+  }
+
+  .team-wave-card:hover .team-wave-img {
+    transform: scale(1.06);
+  }
+
+  .team-wave-card:hover .team-wave-peek {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .team-wave-card:hover .team-wave-overlay {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 }
 
 /* Full Bleed Image Box */
@@ -1133,19 +1245,14 @@ html.lenis, html.lenis body {
   transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.team-wave-card:hover .team-wave-img,
-.team-wave-card.is-active .team-wave-img {
-  transform: scale(1.07);
-}
-
 .team-wave-vignette {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.05) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    rgba(0, 0, 0, 0.85) 100%
+    rgba(4, 6, 11, 0.2) 40%,
+    rgba(4, 6, 11, 0.88) 100%
   );
   pointer-events: none;
 }
@@ -1153,34 +1260,34 @@ html.lenis, html.lenis body {
 /* Top Right LinkedIn Icon */
 .team-wave-in-badge {
   position: absolute;
-  top: 0.85rem;
-  right: 0.85rem;
-  z-index: 3;
-  width: 30px;
-  height: 30px;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 5;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: rgba(0, 119, 181, 0.85);
+  background: rgba(0, 119, 181, 0.88);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 12px rgba(0, 119, 181, 0.35);
-  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 119, 181, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
+  text-decoration: none;
 }
 
-.team-wave-card:hover .team-wave-in-badge {
-  transform: scale(1.12);
+.team-wave-in-badge:hover {
+  transform: scale(1.1);
   background: #0088cc;
-  box-shadow: 0 0 16px rgba(0, 119, 181, 0.55);
 }
 
-/* Default Peek Pill (Before Hover) */
+/* Default Peek Pill (Before Hover on Desktop) */
 .team-wave-peek {
   position: absolute;
-  bottom: 0.85rem;
-  left: 0.85rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
   z-index: 2;
   transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
@@ -1189,14 +1296,14 @@ html.lenis, html.lenis body {
 .team-wave-peek-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  background: rgba(12, 12, 16, 0.78);
+  gap: 0.35rem;
+  background: rgba(8, 13, 26, 0.85);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
-  padding: 0.26rem 0.65rem;
+  padding: 0.22rem 0.6rem;
   font-family: var(--d);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #ffffff;
 }
@@ -1209,40 +1316,28 @@ html.lenis, html.lenis body {
   box-shadow: 0 0 6px #06B6D4;
 }
 
-.team-wave-card:hover .team-wave-peek,
-.team-wave-card.is-active .team-wave-peek {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-/* Interactive Detail Overlay: Naam & Kaam */
+/* Interactive Detail Overlay: Naam & Kaam (Desktop) */
 .team-wave-overlay {
   position: absolute;
   inset: 0;
   z-index: 4;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(8, 8, 12, 0.86) 45%,
-    rgba(2, 2, 4, 0.98) 100%
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(6, 10, 20, 0.85) 45%,
+    rgba(4, 6, 11, 0.98) 100%
   );
   backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(0.95rem, 1.5vw, 1.4rem);
+  padding: 1.1rem 1rem;
   opacity: 0;
   transform: translateY(10px);
   transition:
-    opacity 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
   pointer-events: none;
-}
-
-.team-wave-card:hover .team-wave-overlay,
-.team-wave-card.is-active .team-wave-overlay {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .team-wave-overlay-content {
@@ -1251,30 +1346,28 @@ html.lenis, html.lenis body {
   align-items: flex-start;
 }
 
-/* Naam */
 .team-wave-name {
   font-family: var(--d);
-  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.35rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-/* Kaam (Role Badge) */
 .team-wave-role {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   background: rgba(6, 182, 212, 0.1);
   border: 1px solid rgba(6, 182, 212, 0.28);
   border-radius: 999px;
-  padding: 0.22rem 0.58rem;
-  font-size: 0.7rem;
+  padding: 0.18rem 0.52rem;
+  font-size: 0.67rem;
   font-weight: 600;
   color: #06B6D4;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
 }
 
 .role-cyan-dot {
@@ -1285,40 +1378,230 @@ html.lenis, html.lenis body {
   box-shadow: 0 0 6px #06B6D4;
 }
 
-/* Kaam (Specialty) */
 .team-wave-spec {
-  font-size: 0.74rem;
-  color: #d4d4d8;
-  line-height: 1.45;
-  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  color: #94A3B8;
+  line-height: 1.4;
+  margin: 0 0 0.65rem;
 }
 
-/* Direct LinkedIn Link Button */
 .team-wave-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.88rem;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
   border-radius: 999px;
   background: #0077b5;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  box-shadow: 0 3px 12px rgba(0, 119, 181, 0.35);
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0, 119, 181, 0.35);
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.team-wave-card:hover .team-wave-btn {
+.team-wave-btn:hover {
   background: #0088cc;
   transform: translateY(-2px);
 }
 
-/* Tablet & Mobile: Preserve Unified Single Line */
-@media (max-width: 960px) {
+/* Mobile Footer: Default hidden on desktop, active on tablet & mobile */
+.team-mobile-footer {
+  display: none;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS FOR TEAM SECTION
+   ========================================================================== */
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 641px) {
   .team-wave-track {
-    min-width: 840px;
-    justify-content: flex-start;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.95rem;
+    max-width: 760px;
+    align-items: stretch;
+  }
+
+  .team-wave-card,
+  .team-wave-card.wave-hero,
+  .team-wave-card.wave-big,
+  .team-wave-card.wave-mid,
+  .team-wave-card.wave-small {
+    height: 290px;
+  }
+
+  /* 4th and 5th card styling on 3-col grid */
+  .team-wave-track .team-wave-card:nth-child(4) {
+    grid-column: 1 / 2;
+  }
+
+  .team-wave-peek {
+    display: none;
+  }
+
+  .team-wave-overlay {
+    display: none;
+  }
+
+  .team-mobile-footer {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem 0.85rem 0.9rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(4, 6, 11, 0.85) 30%, rgba(4, 6, 11, 0.98) 100%);
+  }
+
+  .team-mobile-name {
+    font-family: var(--d);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 0.2rem;
+    line-height: 1.2;
+  }
+
+  .team-mobile-role {
+    font-size: 0.72rem;
+    color: #22D3EE;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+  }
+
+  .team-mobile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: rgba(0, 119, 181, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 0.22rem 0.6rem;
+    width: fit-content;
+    text-decoration: none;
+  }
+}
+
+/* Mobile Devices (<= 640px) */
+@media (max-width: 640px) {
+  .team-sec {
+    padding: 3rem 0;
+  }
+
+  .team-wave-container {
+    overflow: visible;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+
+  .team-wave-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    align-items: stretch;
+  }
+
+  .team-wave-card,
+  .team-wave-card.wave-hero,
+  .team-wave-card.wave-big,
+  .team-wave-card.wave-mid,
+  .team-wave-card.wave-small {
+    height: 235px !important;
+    border-radius: 12px;
+  }
+
+  /* 5th item spans centered across 2 columns on mobile */
+  .team-wave-track .team-wave-card:last-child:nth-child(odd) {
+    grid-column: span 2;
+    max-width: 250px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .team-wave-peek {
+    display: none;
+  }
+
+  .team-wave-overlay {
+    display: none;
+  }
+
+  .team-mobile-footer {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    padding: 0.65rem 0.7rem 0.75rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(4, 6, 11, 0.85) 30%, rgba(4, 6, 11, 0.98) 100%);
+  }
+
+  .team-mobile-name {
+    font-family: var(--d);
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 0.15rem;
+    line-height: 1.2;
+  }
+
+  .team-mobile-role {
+    font-size: 0.67rem;
+    color: #22D3EE;
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .team-mobile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: rgba(0, 119, 181, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 0.18rem 0.52rem;
+    width: fit-content;
+    text-decoration: none;
+  }
+
+  .team-wave-in-badge {
+    width: 26px;
+    height: 26px;
+    top: 0.6rem;
+    right: 0.6rem;
+  }
+}
+
+/* Extra small mobile (< 360px) */
+@media (max-width: 360px) {
+  .team-wave-track {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .team-wave-track .team-wave-card:last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: 100%;
+  }
+
+  .team-wave-card {
+    height: 250px !important;
   }
 }
 

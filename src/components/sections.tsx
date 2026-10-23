@@ -1,10 +1,11 @@
-import type { ReactNode } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import { services } from '../data/services'
 import { projects } from '../data/projects'
 import { futureProducts } from '../data/products'
 import { steps, why } from '../data/content'
 import type { Showcase } from '../types'
 import { Clock } from 'lucide-react'
+import { projectsApi } from '../services/api'
 
 /** Splits a heading into words so GSAP can animate them (see App.tsx). */
 function Split({ children }: { children: string }) {
@@ -154,6 +155,9 @@ function Card({ item, cta }: { item: Showcase; cta: string }) {
   return (
     <article className="card rv">
       <div className="pv">
+        {item.category && (
+          <span className="card-cat-badge">{item.category}</span>
+        )}
         {item.url ? (
           <a
             href={item.url}
@@ -176,34 +180,62 @@ function Card({ item, cta }: { item: Showcase; cta: string }) {
         )}
       </div>
       <div className="cb">
-        {item.placeholder && <span className="tag">Placeholder content</span>}
         <h3>{item.name}</h3>
-        <p>{item.category}. {item.description}</p>
-        <div className="tg">{item.tech.map((t) => <span key={t}>{t}</span>)}</div>
+        <p>{item.description}</p>
+        <div className="tg">
+          {(item.tech || []).slice(0, 4).map((t) => (
+            <span key={t}>{t}</span>
+          ))}
+        </div>
         {item.url && (
-          <p style={{ marginTop: '1rem' }}>
-            <a href={item.url} target="_blank" rel="noopener noreferrer">
-              {cta}
+          <div style={{ marginTop: '1rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+            <a href={item.url} target="_blank" rel="noopener noreferrer" className="card-cta-link">
+              <span>{cta}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
             </a>
-          </p>
+          </div>
         )}
       </div>
     </article>
   )
 }
 
-export const Work = () => (
-  <Sec id="work">
-    <div className="wrap">
-      <Head label="Selected work" title="Real projects. Thoughtful solutions." />
-      <div className="cards">
-        {projects.map((p, i) => (
-          <Card key={i} item={p} cta="View project" />
-        ))}
+export function Work() {
+  const [projectList, setProjectList] = useState<Showcase[]>(projects)
+
+  useEffect(() => {
+    let isMounted = true
+    projectsApi
+      .getPublic()
+      .then((data) => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setProjectList(data)
+        }
+      })
+      .catch(() => {
+        // Fallback gracefully to bundled projects
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return (
+    <Sec id="work">
+      <div className="wrap">
+        <Head label="Selected work" title="Real projects. Thoughtful solutions." />
+        <div className="cards">
+          {projectList.map((p, i) => (
+            <Card key={p.name || i} item={p} cta="View live product" />
+          ))}
+        </div>
       </div>
-    </div>
-  </Sec>
-)
+    </Sec>
+  )
+}
 
 /**
  * Future Products Section
