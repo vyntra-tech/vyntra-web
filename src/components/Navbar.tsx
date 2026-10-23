@@ -4,7 +4,6 @@ const LINKS: [string, string][] = [
   ['home', 'Home'],
   ['about', 'About'],
   ['services', 'Services'],
-  ['vision', 'Vision'],
   ['work', 'Work'],
   ['products', 'Products'],
   ['team', 'Team'],

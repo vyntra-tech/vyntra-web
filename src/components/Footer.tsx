@@ -249,13 +249,13 @@ export default function Footer() {
               <div className="footer-contact-item">
                 <span className="footer-contact-label">Direct Helpline:</span>
                 <a href="tel:+919131648013" className="footer-contact-value footer-link-highlight">
-                  +91 91316 48013
+                  +91 99774 13362
                 </a>
               </div>
               <div className="footer-contact-item">
                 <span className="footer-contact-label">Direct Email:</span>
                 <a href="mailto:vyntratechnologies@gmail.com" className="footer-contact-value footer-link-highlight">
-                  vyntratechnologies@gmail.com
+                  hellow.vyntra@gmail.com
                 </a>
               </div>
               <div className="footer-contact-item">
