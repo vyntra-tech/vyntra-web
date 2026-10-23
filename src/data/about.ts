@@ -1,3 +1,5 @@
+import aboutVideo from '../assets/about-vedeio.mp4'
+
 export interface AboutStat {
   value: string
   label: string
@@ -32,7 +34,7 @@ export const aboutContent = {
   ctaText: "Let's Talk",
   ctaHref: '#contact',
   video: {
-    src: '', // Configurable company introduction video source
+    src: aboutVideo, // Video asset configured to play in loop
     poster: '',
     caption: 'Meet VYNTRA',
   } as AboutVideoConfig,

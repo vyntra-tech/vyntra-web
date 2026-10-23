@@ -282,6 +282,7 @@ html.lenis, html.lenis body {
   height: 100%;
   object-fit: cover;
   display: block;
+  cursor: pointer;
 }
 
 .about-video-poster {
@@ -420,6 +421,56 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+.about-video-paused-indicator {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+  z-index: 4;
+}
+
+.about-video-controls {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 5;
+}
+
+.about-ctrl-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(14, 14, 18, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.about-ctrl-btn:hover {
+  background: rgba(124, 58, 237, 0.5);
+  border-color: #06B6D4;
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
+}
+
+.about-ctrl-btn:active {
+  transform: scale(0.95);
+}
+
 /* Responsive Adaptations */
 @media (max-width: 960px) {
   .about-bento-grid {
@@ -457,6 +508,15 @@ html.lenis, html.lenis body {
   .about-video-caption {
     bottom: 0.85rem;
     left: 1rem;
+  }
+  .about-video-controls {
+    bottom: 0.85rem;
+    right: 1rem;
+    gap: 0.35rem;
+  }
+  .about-ctrl-btn {
+    width: 32px;
+    height: 32px;
   }
 }
 

@@ -1,27 +1,51 @@
-import { useState, useRef } from 'react'
-import { ArrowRight, Play } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react'
 import { aboutContent } from '../data/about'
 import vyntraLogo from '../assets/vyntra-logo.png'
 
 export default function About() {
   const { label, heading, description, stats, ctaText, ctaHref, video } = aboutContent
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [showConfigHint, setShowConfigHint] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [isMuted, setIsMuted] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const handlePlayClick = () => {
-    if (video.src) {
-      setIsPlaying(true)
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.play().catch(() => {
-            // Browser autoplay policy catch
-          })
-        }
-      }, 50)
+  useEffect(() => {
+    if (videoRef.current && video.src) {
+      videoRef.current.play().catch(() => {
+        // Fallback if browser requires interaction
+        setIsPlaying(false)
+      })
+    }
+  }, [video.src])
+
+  const togglePlay = () => {
+    if (!videoRef.current) return
+    if (videoRef.current.paused) {
+      videoRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {})
     } else {
-      setShowConfigHint(true)
-      setTimeout(() => setShowConfigHint(false), 4000)
+      videoRef.current.pause()
+      setIsPlaying(false)
+    }
+  }
+
+  const toggleMute = (e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    if (!videoRef.current) return
+    const nextMuted = !videoRef.current.muted
+    videoRef.current.muted = nextMuted
+    setIsMuted(nextMuted)
+  }
+
+  const toggleFullscreen = (e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    if (!videoRef.current) return
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {})
+    } else {
+      videoRef.current.requestFullscreen().catch(() => {})
     }
   }
 
@@ -63,37 +87,108 @@ export default function About() {
           <div className="about-right-col">
             <div className="about-video-card">
               <div className="about-video-container">
-                {isPlaying && video.src ? (
-                  <video
-                    ref={videoRef}
-                    src={video.src}
-                    poster={video.poster}
-                    controls
-                    autoPlay
-                    playsInline
-                    className="about-native-video"
-                    onEnded={() => setIsPlaying(false)}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <div
-                    className="about-video-poster"
-                    onClick={handlePlayClick}
-                    role="button"
-                    tabIndex={0}
-                    aria-label="Play company introduction video: Meet VYNTRA"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        handlePlayClick()
-                      }
-                    }}
-                  >
-                    {/* Background Ambient Glow & Grid */}
+                {video.src ? (
+                  <>
+                    <video
+                      ref={videoRef}
+                      src={video.src}
+                      poster={video.poster}
+                      autoPlay
+                      loop
+                      muted={isMuted}
+                      playsInline
+                      className="about-native-video"
+                      onClick={togglePlay}
+                      onPlay={() => setIsPlaying(true)}
+                      onPause={() => setIsPlaying(false)}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+
+                    {/* Ambient Glow */}
                     <div className="about-video-glow" aria-hidden="true" />
 
-                    {/* Logo & Brand Emblem */}
+                    {/* Logo & Brand Emblem (Top-Left) */}
+                    <div className="about-video-brand-wrap" aria-hidden="true">
+                      <div className="about-video-emblem" style={{ background: 'transparent', border: 'none' }}>
+                        <img
+                          src={vyntraLogo}
+                          alt="VYNTRA"
+                          style={{
+                            width: '38px',
+                            height: '38px',
+                            objectFit: 'contain',
+                            filter: 'drop-shadow(0 4px 14px rgba(124, 58, 237, 0.6))',
+                          }}
+                        />
+                      </div>
+                      <span className="about-video-wordmark">VYNTRA</span>
+                    </div>
+
+                    {/* Centered Pause/Play overlay when paused */}
+                    {!isPlaying && (
+                      <div
+                        className="about-video-paused-indicator"
+                        onClick={togglePlay}
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Resume video"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            togglePlay()
+                          }
+                        }}
+                      >
+                        <div className="about-play-button">
+                          <Play size={24} fill="currentColor" className="about-play-icon" aria-hidden="true" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Video Caption at Bottom-Left */}
+                    <div className="about-video-caption">
+                      <span className="caption-dot" aria-hidden="true" />
+                      <span>{video.caption}</span>
+                    </div>
+
+                    {/* Interactive Controls at Bottom-Right */}
+                    <div className="about-video-controls">
+                      <button
+                        type="button"
+                        className="about-ctrl-btn"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          togglePlay()
+                        }}
+                        aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                        title={isPlaying ? 'Pause' : 'Play'}
+                      >
+                        {isPlaying ? <Pause size={16} /> : <Play size={16} fill="currentColor" />}
+                      </button>
+                      <button
+                        type="button"
+                        className="about-ctrl-btn"
+                        onClick={toggleMute}
+                        aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                        title={isMuted ? 'Unmute' : 'Mute'}
+                      >
+                        {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                      </button>
+                      <button
+                        type="button"
+                        className="about-ctrl-btn"
+                        onClick={toggleFullscreen}
+                        aria-label="Toggle fullscreen"
+                        title="Fullscreen"
+                      >
+                        <Maximize2 size={15} />
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="about-video-poster">
+                    <div className="about-video-glow" aria-hidden="true" />
                     <div className="about-video-brand-wrap" aria-hidden="true">
                       <div className="about-video-emblem" style={{ background: 'transparent', border: 'none' }}>
                         <img
@@ -109,31 +204,8 @@ export default function About() {
                       </div>
                       <span className="about-video-wordmark">VYNTRA</span>
                     </div>
-
-                    {/* Centered Play Button */}
-                    <button
-                      type="button"
-                      className="about-play-button"
-                      aria-label="Play video"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handlePlayClick()
-                      }}
-                    >
-                      <Play size={24} fill="currentColor" className="about-play-icon" aria-hidden="true" />
-                    </button>
-
-                    {/* Notification hint if video source is not yet configured */}
-                    {showConfigHint && (
-                      <div className="about-video-hint" role="status" aria-live="polite">
-                        <span>Video source configurable in src/data/about.ts</span>
-                      </div>
-                    )}
-
-                    {/* Video Caption at Bottom */}
-                    <div className="about-video-caption">
-                      <span className="caption-dot" aria-hidden="true" />
-                      <span>{video.caption}</span>
+                    <div className="about-video-hint" role="status" aria-live="polite">
+                      <span>Video source configurable in src/data/about.ts</span>
                     </div>
                   </div>
                 )}
