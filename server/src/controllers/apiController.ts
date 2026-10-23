@@ -588,25 +588,61 @@ export async function deleteGalleryItem(req: Request, res: Response) {
 
 export async function uploadMedia(req: Request, res: Response) {
   const { name, data } = req.body || {}
-  if (!data) return res.status(400).json({ ok: false, error: 'No media payload' })
+  if (!data || typeof data !== 'string') {
+    return res.status(400).json({ ok: false, error: 'No media payload provided.' })
+  }
 
   try {
-    const matches = data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
-    if (!matches || matches.length !== 3) {
-      return res.status(400).json({ ok: false, error: 'Invalid base64 payload' })
+    let mimeType = 'image/png'
+    let base64Data = data.trim()
+
+    // Handle data URL scheme (e.g. data:image/png;base64,.... or data:image/svg+xml;charset=utf-8;base64,....)
+    if (base64Data.startsWith('data:')) {
+      const commaIdx = base64Data.indexOf(',')
+      if (commaIdx !== -1) {
+        const header = base64Data.slice(5, commaIdx)
+        const semiIdx = header.indexOf(';')
+        if (semiIdx !== -1) {
+          mimeType = header.slice(0, semiIdx).toLowerCase().trim()
+        } else {
+          mimeType = header.toLowerCase().trim()
+        }
+        base64Data = base64Data.slice(commaIdx + 1)
+      }
     }
 
-    const mimeType = matches[1]
-    const base64Data = matches[2]
+    // Strip any whitespace or line breaks
+    base64Data = base64Data.replace(/[\r\n\s]+/g, '')
+    if (!base64Data) {
+      return res.status(400).json({ ok: false, error: 'Empty base64 data after extraction.' })
+    }
+
     const buffer = Buffer.from(base64Data, 'base64')
+    if (buffer.length === 0) {
+      return res.status(400).json({ ok: false, error: 'Failed to decode image data.' })
+    }
 
-    let ext = '.png'
-    if (mimeType.includes('jpeg') || mimeType.includes('jpg')) ext = '.jpg'
-    else if (mimeType.includes('webp')) ext = '.webp'
-    else if (mimeType.includes('svg')) ext = '.svg'
+    // Limit check: 25MB max binary
+    if (buffer.length > 25 * 1024 * 1024) {
+      return res.status(400).json({ ok: false, error: 'File size exceeds maximum 25MB limit.' })
+    }
 
-    const cleanName = (name || 'upload').replace(/[^a-zA-Z0-9_-]/g, '_')
-    const fileName = `${Date.now()}-${cleanName}${ext}`
+    // Determine extension intelligently
+    const originalExt = path.extname(name || '').toLowerCase()
+    let ext = originalExt
+    if (!ext || ext.length < 2) {
+      if (mimeType.includes('jpeg') || mimeType.includes('jpg')) ext = '.jpg'
+      else if (mimeType.includes('webp')) ext = '.webp'
+      else if (mimeType.includes('svg')) ext = '.svg'
+      else if (mimeType.includes('gif')) ext = '.gif'
+      else if (mimeType.includes('avif')) ext = '.avif'
+      else if (mimeType.includes('png')) ext = '.png'
+      else ext = '.png'
+    }
+
+    const rawBaseName = originalExt ? path.basename(name || 'upload', originalExt) : (name || 'upload')
+    const cleanBaseName = rawBaseName.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 50) || 'upload'
+    const fileName = `${Date.now()}-${cleanBaseName}${ext}`
     const filePath = path.join(uploadsDir, fileName)
 
     if (!fs.existsSync(uploadsDir)) {
@@ -616,7 +652,13 @@ export async function uploadMedia(req: Request, res: Response) {
     fs.writeFileSync(filePath, buffer)
     const url = `/uploads/${fileName}`
 
-    logActivity(`${req.user?.name}`, 'MEDIA_UPLOADED', `File: ${fileName}`, `${(buffer.length / 1024).toFixed(1)} KB`)
+    logActivity(
+      req.user?.name ? `${req.user.name}` : 'Admin',
+      'MEDIA_UPLOADED',
+      `File: ${fileName}`,
+      `${(buffer.length / 1024).toFixed(1)} KB`
+    )
+
     return res.json({
       ok: true,
       url,
@@ -626,7 +668,8 @@ export async function uploadMedia(req: Request, res: Response) {
       uploadedAt: new Date().toISOString(),
     })
   } catch (err: any) {
-    return res.status(500).json({ ok: false, error: err.message })
+    console.error('Error in uploadMedia:', err)
+    return res.status(500).json({ ok: false, error: err.message || 'Media upload failed' })
   }
 }
 

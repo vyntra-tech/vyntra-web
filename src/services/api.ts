@@ -40,9 +40,11 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError<{ ok?: boolean; error?: string }>) => {
-    if (error.response?.status === 401) {
+    const isLoginEndpoint = error.config?.url?.includes('/auth/login')
+    if (error.response?.status === 401 && !isLoginEndpoint) {
       // Clear expired credentials if on admin routes
-      if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+      const path = window.location.pathname
+      if (path.startsWith('/admin') && path !== '/admin/login') {
         localStorage.removeItem('vyntra_admin_token')
         localStorage.removeItem('vyntra_admin_user')
         window.location.href = '/admin/login'

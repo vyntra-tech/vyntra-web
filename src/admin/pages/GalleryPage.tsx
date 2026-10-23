@@ -57,16 +57,19 @@ export function GalleryPage() {
   }, [])
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const targetInput = e.target
+    const file = targetInput.files?.[0]
     if (!file) return
 
     if (!file.type.startsWith('image/')) {
-      toast({ title: 'Invalid File', description: 'Please select an image file (PNG, JPG, WebP, SVG).', status: 'warning' })
+      toast({ title: 'Invalid File', description: 'Please select an image file (PNG, JPG, WebP, SVG, GIF, AVIF).', status: 'warning' })
+      targetInput.value = ''
       return
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      toast({ title: 'File Too Large', description: 'Maximum file size is 10MB.', status: 'warning' })
+    if (file.size > 25 * 1024 * 1024) {
+      toast({ title: 'File Too Large', description: 'Maximum file size is 25MB.', status: 'warning' })
+      targetInput.value = ''
       return
     }
 
@@ -94,6 +97,7 @@ export function GalleryPage() {
         toast({ title: 'Upload Failed', description: err.message, status: 'error' })
       } finally {
         setUploading(false)
+        targetInput.value = ''
       }
     }
     reader.readAsDataURL(file)

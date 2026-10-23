@@ -337,7 +337,7 @@
     {
       "id": "chandrabhan-gadeshwar",
       "name": "Chandrabhan Gadeshwar",
-      "role": "Founder & Web Architect",
+      "role": "Founder & CEO",
       "initials": "CG",
       "image": "/src/assets/chandrabhan.jpg",
       "imagePosition": "center 20%",
@@ -355,12 +355,13 @@
       "portfolio": "",
       "size": "large",
       "status": "published",
-      "order": 1
+      "order": 1,
+      "updatedAt": "2026-10-23T04:40:56.895Z"
     },
     {
       "id": "shubham-uprade",
       "name": "Shubham Uprade",
-      "role": "Co-Founder & UI/UX Lead",
+      "role": "Co-Founder & CTO",
       "initials": "SU",
       "image": "/src/assets/shubham.jpg",
       "imagePosition": "center 12%",
@@ -378,7 +379,8 @@
       "portfolio": "",
       "size": "medium",
       "status": "published",
-      "order": 2
+      "order": 2,
+      "updatedAt": "2026-10-23T04:40:48.816Z"
     },
     {
       "id": "sanjay-sende",
@@ -451,20 +453,6 @@
     }
   ],
   "testimonials": [
-    {
-      "id": "rev-1",
-      "name": "Aarav Sharma",
-      "role": "Founder",
-      "company": "Namaste Cafe",
-      "initials": "AS",
-      "rating": 5,
-      "review": "VYNTRA transformed our brand into an extraordinary digital experience. Online orders surged by 45% within the first month.",
-      "project": "Restaurant Digital Platform",
-      "tag": "Web Architecture",
-      "avatar": "",
-      "status": "published",
-      "order": 1
-    },
     {
       "id": "rev-2",
       "name": "Priya Patel",
@@ -597,6 +585,21 @@
   ],
   "gallery": [
     {
+      "title": "shubham",
+      "subtitle": "",
+      "category": "community",
+      "type": "image",
+      "image": "/uploads/1792732195458-shubham_jpg.jpg",
+      "videoUrl": "",
+      "tag": "MEDIA UPLOAD",
+      "caption": "",
+      "alt": "shubham.jpg",
+      "uploadedAt": "2026-10-23T05:10:03.692Z",
+      "id": "item-1792732203692-0f2dad49",
+      "createdAt": "2026-10-23T05:10:03.693Z",
+      "updatedAt": "2026-10-23T05:10:03.693Z"
+    },
+    {
       "id": "placement-story",
       "title": "From Campus to Product Engineer",
       "subtitle": "Placement & Career Journey",
@@ -715,8 +718,9 @@
       "type": "AI or automation",
       "budget": "₹50,000–₹1,00,000",
       "description": "We are looking to implement an AI copilot into our financial reconciliation system. Needs high security and low latency.",
-      "status": "unread",
-      "createdAt": "2026-02-22T08:14:00.000Z"
+      "status": "read",
+      "createdAt": "2026-02-22T08:14:00.000Z",
+      "updatedAt": "2026-10-23T04:39:08.366Z"
     },
     {
       "id": "msg-seed-2",
@@ -731,6 +735,190 @@
     }
   ],
   "activity": [
+    {
+      "id": "act-1792733756192-db0118",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-23T05:35:56.192Z"
+    },
+    {
+      "id": "act-1792733445947-d2179f",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792733445946-profile-picture.png",
+      "details": "0.1 KB",
+      "timestamp": "2026-10-23T05:30:45.947Z"
+    },
+    {
+      "id": "act-1792733445879-8399af",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-23T05:30:45.879Z"
+    },
+    {
+      "id": "act-1792732824312-3bc1aa",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792732824308-large-image_png.png",
+      "details": "3072.0 KB",
+      "timestamp": "2026-10-23T05:20:24.312Z"
+    },
+    {
+      "id": "act-1792732824200-85de68",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792732824183-test-photo_jpg.jpg",
+      "details": "0.1 KB",
+      "timestamp": "2026-10-23T05:20:24.200Z"
+    },
+    {
+      "id": "act-1792732824115-ca1927",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792732824114-test-icon_png.png",
+      "details": "0.1 KB",
+      "timestamp": "2026-10-23T05:20:24.115Z"
+    },
+    {
+      "id": "act-1792732824038-503392",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-23T05:20:24.038Z"
+    },
+    {
+      "id": "act-1792732203799-199cc9",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: shubham",
+      "details": "Type: image",
+      "timestamp": "2026-10-23T05:10:03.806Z"
+    },
+    {
+      "id": "act-1792732201007-e7ef6d",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792732195458-shubham_jpg.jpg",
+      "details": "118.9 KB",
+      "timestamp": "2026-10-23T05:10:01.009Z"
+    },
+    {
+      "id": "act-1792732112592-5f03c5",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-23T05:08:32.593Z"
+    },
+    {
+      "id": "act-1792731179227-8b0e79",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-23T04:52:59.228Z"
+    },
+    {
+      "id": "act-1792730456898-8afc18",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TEAM_MEMBER_UPDATED",
+      "target": "Team: Chandrabhan Gadeshwar",
+      "details": "Updated details",
+      "timestamp": "2026-10-23T04:40:56.898Z"
+    },
+    {
+      "id": "act-1792730448819-51349a",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TEAM_MEMBER_UPDATED",
+      "target": "Team: Shubham Uprade",
+      "details": "Updated details",
+      "timestamp": "2026-10-23T04:40:48.819Z"
+    },
+    {
+      "id": "act-1792730396707-9c8eb2",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TESTIMONIAL_DELETED",
+      "target": "Testimonial ID: rev-1",
+      "details": "Deleted review",
+      "timestamp": "2026-10-23T04:39:56.707Z"
+    },
+    {
+      "id": "act-1792730390146-7fe60f",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: item-1792730384409-f1133954",
+      "details": "Deleted media",
+      "timestamp": "2026-10-23T04:39:50.146Z"
+    },
+    {
+      "id": "act-1792730384413-4d6f2e",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: shubham",
+      "details": "Type: image",
+      "timestamp": "2026-10-23T04:39:44.413Z"
+    },
+    {
+      "id": "act-1792730384160-532971",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792730384106-shubham_jpg.jpg",
+      "details": "118.9 KB",
+      "timestamp": "2026-10-23T04:39:44.160Z"
+    },
+    {
+      "id": "act-1792730378066-a5ca06",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: item-1792730372453-b8e2b7f9",
+      "details": "Deleted media",
+      "timestamp": "2026-10-23T04:39:38.073Z"
+    },
+    {
+      "id": "act-1792730372457-090df8",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: chandrabhan",
+      "details": "Type: image",
+      "timestamp": "2026-10-23T04:39:32.457Z"
+    },
+    {
+      "id": "act-1792730372370-480cf8",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1792730372327-chandrabhan_jpg.jpg",
+      "details": "54.6 KB",
+      "timestamp": "2026-10-23T04:39:32.370Z"
+    },
+    {
+      "id": "act-1792730341105-883fbe",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "SETTINGS_UPDATED",
+      "target": "Global Settings",
+      "details": "Updated site configuration",
+      "timestamp": "2026-10-23T04:39:01.105Z"
+    },
+    {
+      "id": "act-1792730312005-a087e9",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "SETTINGS_UPDATED",
+      "target": "Global Settings",
+      "details": "Updated site configuration",
+      "timestamp": "2026-10-23T04:38:32.005Z"
+    },
+    {
+      "id": "act-1792730275055-a61f5a",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-23T04:37:55.056Z"
+    },
     {
       "id": "act-1792729818662-1d80ec",
       "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
@@ -889,9 +1077,9 @@
     "tagline": "Build. Deploy. Scale.",
     "contactEmail": "contact@vyntra.tech",
     "supportEmail": "support@vyntra.tech",
-    "phone": "+91 98765 43210",
+    "phone": "+91 9977413362",
     "whatsapp": "+91 98765 43210",
-    "address": "Nagpur & Pune, Maharashtra, India",
+    "address": "Inodre Madhya Pradesh",
     "socials": [
       {
         "label": "LinkedIn",

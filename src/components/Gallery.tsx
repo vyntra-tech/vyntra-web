@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { galleryItems } from '../data/gallery'
+import { galleryItems as defaultGalleryItems } from '../data/gallery'
+import { galleryApi } from '../services/api'
 import type { GalleryItem } from '../types'
 import { ArrowUpRight, Play, X, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 
@@ -26,13 +27,31 @@ function Split({ children }: { children: string }) {
 }
 
 export default function Gallery() {
+  const [items, setItems] = useState<GalleryItem[]>(defaultGalleryItems)
   const [activeTab, setActiveTab] = useState<'all' | 'story' | 'celebration' | 'community'>('all')
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null)
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null)
 
+  useEffect(() => {
+    let isMounted = true
+    galleryApi
+      .getPublic()
+      .then((data) => {
+        if (isMounted && Array.isArray(data) && data.length > 0) {
+          setItems(data)
+        }
+      })
+      .catch(() => {
+        // Fallback gracefully to default items
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   const filteredItems = activeTab === 'all'
-    ? galleryItems
-    : galleryItems.filter((item) => item.category === activeTab || item.type === 'stat')
+    ? items
+    : items.filter((item) => item.category === activeTab || item.type === 'stat')
 
   const openLightbox = (item: GalleryItem) => {
     setActiveItem(item)
@@ -50,21 +69,21 @@ export default function Gallery() {
 
   const navigateLightbox = useCallback((direction: 'next' | 'prev') => {
     if (!activeItem) return
-    const currentIndex = galleryItems.findIndex((i) => i.id === activeItem.id)
+    const currentIndex = items.findIndex((i) => i.id === activeItem.id)
     if (currentIndex === -1) return
 
     let nextIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1
-    if (nextIndex >= galleryItems.length) nextIndex = 0
-    if (nextIndex < 0) nextIndex = galleryItems.length - 1
+    if (nextIndex >= items.length) nextIndex = 0
+    if (nextIndex < 0) nextIndex = items.length - 1
 
-    const nextItem = galleryItems[nextIndex]
+    const nextItem = items[nextIndex]
     setActiveItem(nextItem)
     if (nextItem.type === 'video') {
       setPlayingVideoId(nextItem.id)
     } else {
       setPlayingVideoId(null)
     }
-  }, [activeItem])
+  }, [activeItem, items])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -333,7 +352,7 @@ export default function Gallery() {
                 <div className="gallery-modal-meta">
                   {activeItem.tag && <span className="gallery-modal-tag">{activeItem.tag}</span>}
                   <span className="gallery-modal-counter">
-                    {galleryItems.findIndex((i) => i.id === activeItem.id) + 1} / {galleryItems.length}
+                    {items.findIndex((i: GalleryItem) => i.id === activeItem.id) + 1} / {items.length}
                   </span>
                 </div>
                 <h3 className="gallery-modal-title">{activeItem.title}</h3>

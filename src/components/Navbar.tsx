@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from '../lib/gsap'
+import vyntraLogo from '../assets/vyntra-logo.png'
 const LINKS: [string, string][] = [
   ['home', 'Home'],
   ['about', 'About'],
@@ -39,10 +40,16 @@ export default function Navbar() {
     <nav className={solid ? 's' : ''}>
       <div className="wrap nb">
         <a className="logo" href="#home" aria-label="VYNTRA Technologies home">
-          <svg viewBox="0 0 32 32" aria-hidden="true">
-            <path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="#8B5CF6" strokeWidth="2" />
-            <path d="M12 12l4 9 4-9" fill="none" stroke="#22D3EE" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <img
+            src={vyntraLogo}
+            alt="VYNTRA"
+            style={{
+              width: '28px',
+              height: '28px',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 2px 8px rgba(124, 58, 237, 0.45))',
+            }}
+          />
           VYNTRA
         </a>
         <button className="burger" aria-expanded={open} aria-controls="lk" aria-label="Toggle menu" onClick={() => setOpen((o) => !o)}><span /><span /><span /></button>

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { ArrowRight, Play } from 'lucide-react'
 import { aboutContent } from '../data/about'
+import vyntraLogo from '../assets/vyntra-logo.png'
 
 export default function About() {
   const { label, heading, description, stats, ctaText, ctaHref, video } = aboutContent
@@ -94,23 +95,17 @@ export default function About() {
 
                     {/* Logo & Brand Emblem */}
                     <div className="about-video-brand-wrap" aria-hidden="true">
-                      <div className="about-video-emblem">
-                        <svg viewBox="0 0 32 32" className="about-video-svg" aria-hidden="true">
-                          <path
-                            d="M16 2 29 9.5v13L16 30 3 22.5v-13z"
-                            fill="none"
-                            stroke="#7C3AED"
-                            strokeWidth="2.2"
-                          />
-                          <path
-                            d="M12 12l4 9 4-9"
-                            fill="none"
-                            stroke="#06B6D4"
-                            strokeWidth="2.6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                      <div className="about-video-emblem" style={{ background: 'transparent', border: 'none' }}>
+                        <img
+                          src={vyntraLogo}
+                          alt="VYNTRA"
+                          style={{
+                            width: '42px',
+                            height: '42px',
+                            objectFit: 'contain',
+                            filter: 'drop-shadow(0 4px 14px rgba(124, 58, 237, 0.6))',
+                          }}
+                        />
                       </div>
                       <span className="about-video-wordmark">VYNTRA</span>
                     </div>

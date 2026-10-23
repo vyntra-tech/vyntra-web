@@ -23,7 +23,9 @@ import {
   useDisclosure,
   useToast,
   Tooltip,
+  Image,
 } from '@chakra-ui/react'
+import vyntraLogo from '../../assets/vyntra-logo.png'
 import {
   LayoutDashboard,
   Briefcase,
@@ -193,20 +195,15 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           borderColor="rgba(255, 255, 255, 0.08)"
         >
           <HStack as={RouterLink} to="/admin/dashboard" spacing={3}>
-            <Box
-              w="34px"
-              h="34px"
-              borderRadius="lg"
-              bgGradient="linear(to-br, brand.500, cyan.500)"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              boxShadow="0 4px 12px rgba(124, 58, 237, 0.35)"
-            >
-              <svg width="20" height="20" viewBox="0 0 32 32">
-                <path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="#FFFFFF" strokeWidth="2.5" />
-                <path d="M12 12l4 9 4-9" fill="none" stroke="#22D3EE" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+            <Box position="relative" display="flex" alignItems="center" justifyContent="center">
+              <Image
+                src={vyntraLogo}
+                alt="VYNTRA"
+                w="34px"
+                h="34px"
+                objectFit="contain"
+                filter="drop-shadow(0 4px 12px rgba(124, 58, 237, 0.4))"
+              />
             </Box>
             {!collapsed && (
               <Box>
@@ -303,20 +300,14 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <DrawerCloseButton color="gray.400" top={4} />
           <Box p={5} borderBottomWidth="1px" borderColor="rgba(255, 255, 255, 0.08)">
             <HStack spacing={3}>
-              <Box
+              <Image
+                src={vyntraLogo}
+                alt="VYNTRA"
                 w="32px"
                 h="32px"
-                borderRadius="lg"
-                bgGradient="linear(to-br, brand.500, cyan.500)"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <svg width="18" height="18" viewBox="0 0 32 32">
-                  <path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="#FFFFFF" strokeWidth="2.5" />
-                  <path d="M12 12l4 9 4-9" fill="none" stroke="#22D3EE" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Box>
+                objectFit="contain"
+                filter="drop-shadow(0 2px 8px rgba(124, 58, 237, 0.4))"
+              />
               <Box>
                 <Text fontFamily="heading" fontWeight="700" fontSize="md">
                   VYNTRA

@@ -9,6 +9,7 @@ import {
   ArrowUpRight,
   Sparkles,
 } from 'lucide-react'
+import vyntraLogo from '../assets/vyntra-logo.png'
 
 
 export default function Footer() {
@@ -133,10 +134,16 @@ export default function Footer() {
           {/* Column 1: Brand Info & Social Media Icons */}
           <div className="footer-brand-col footer-reveal">
             <a className="footer-logo" href="#home" aria-label="VYNTRA Technologies home">
-              <svg viewBox="0 0 32 32" aria-hidden="true" className="footer-logo-svg">
-                <path d="M16 2 29 9.5v13L16 30 3 22.5v-13z" fill="none" stroke="#8B5CF6" strokeWidth="2.2" />
-                <path d="M12 12l4 9 4-9" fill="none" stroke="#22D3EE" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <img
+                src={vyntraLogo}
+                alt="VYNTRA"
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 2px 10px rgba(124, 58, 237, 0.45))',
+                }}
+              />
               <span>VYNTRA Technologies</span>
             </a>
 

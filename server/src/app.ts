@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
 
 // Ensure public uploads directory exists
-const uploadsDir = path.join(__dirname, '../../../public/uploads')
+const uploadsDir = path.resolve(__dirname, '../../public/uploads')
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true })
 }
@@ -24,8 +24,8 @@ app.use(
   })
 )
 app.use(cors({ origin: ENV.CLIENT_ORIGIN || true }))
-app.use(express.json({ limit: '25mb' }))
-app.use(express.urlencoded({ extended: true, limit: '25mb' }))
+app.use(express.json({ limit: '50mb' }))
+app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 // Serve uploaded media files
 app.use('/uploads', express.static(uploadsDir))
@@ -34,7 +34,7 @@ app.use('/uploads', express.static(uploadsDir))
 app.use('/api', apiRoutes)
 
 // Serve the built frontend in production
-const dist = path.join(__dirname, '../../../dist')
+const dist = path.resolve(__dirname, '../../dist')
 app.use(express.static(dist))
 app.get('*', (req: Request, res: Response, next: NextFunction) => {
   if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {

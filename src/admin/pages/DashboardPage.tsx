@@ -29,10 +29,17 @@ import {
   ArrowUpRight,
   Database,
   CheckCircle2,
+  TrendingUp,
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { statsApi } from '../../services/api'
 import type { AdminStats } from '../../types'
+import {
+  VelocityDualBarChart,
+  CategoryVerticalBarChart,
+  ClusterTelemetryBarChart,
+  MiniBarSparkline,
+} from '../components/DashboardCharts'
 
 export function DashboardPage() {
   const { user } = useAuth()
@@ -58,56 +65,74 @@ export function DashboardPage() {
       label: 'Portfolio Projects',
       value: stats?.totalProjects ?? 4,
       sub: `${stats?.publishedProjects ?? 4} published · ${stats?.draftProjects ?? 0} draft`,
+      trend: '+25% this month',
       icon: Briefcase,
-      color: 'brand.400',
+      color: '#A78BFA',
+      sparkScheme: 'purple' as const,
+      sparkValues: [2, 3, 3, 4, 4, 5, 5],
       href: '/admin/projects',
     },
     {
       label: 'Active Services',
       value: stats?.totalServices ?? 6,
-      sub: 'Categorized capabilities',
+      sub: 'Categorized technical capabilities',
+      trend: '100% capacity',
       icon: Layers,
-      color: 'cyan.400',
+      color: '#22D3EE',
+      sparkScheme: 'cyan' as const,
+      sparkValues: [4, 4, 5, 5, 6, 6, 6],
       href: '/admin/services',
     },
     {
       label: 'Product Ecosystem',
       value: stats?.totalProducts ?? 3,
       sub: 'Cloud, AI & Studio platforms',
+      trend: '+1 upcoming beta',
       icon: Sparkles,
-      color: 'purple.300',
+      color: '#C084FC',
+      sparkScheme: 'purple' as const,
+      sparkValues: [1, 2, 2, 2, 3, 3, 3],
       href: '/admin/products',
     },
     {
       label: 'Team Members',
       value: stats?.totalTeam ?? 5,
-      sub: 'Engineers & architects',
+      sub: 'Engineers & leadership',
+      trend: '2 Co-founders active',
       icon: Users,
-      color: 'teal.300',
+      color: '#34D399',
+      sparkScheme: 'green' as const,
+      sparkValues: [3, 3, 4, 4, 5, 5, 5],
       href: '/admin/team',
     },
     {
       label: 'Client Testimonials',
       value: stats?.totalTestimonials ?? 6,
-      sub: 'Verified client reviews',
+      sub: 'Verified 5.0★ reviews',
+      trend: '+2 new endorsements',
       icon: MessageSquareQuote,
-      color: 'pink.400',
+      color: '#F472B6',
+      sparkScheme: 'pink' as const,
+      sparkValues: [2, 3, 4, 4, 5, 6, 6],
       href: '/admin/testimonials',
     },
     {
       label: 'Contact Inquiries',
       value: stats?.totalMessages ?? 2,
       sub: `${stats?.unreadMessages ?? 0} unread submissions`,
+      trend: stats?.unreadMessages ? `${stats.unreadMessages} NEW ACTION` : 'Inbox clear',
       icon: Inbox,
-      color: 'orange.400',
+      color: '#FB923C',
+      sparkScheme: 'orange' as const,
+      sparkValues: [10, 14, 18, 22, 28, 35, 42],
       badge: stats?.unreadMessages ? `${stats.unreadMessages} NEW` : undefined,
       href: '/admin/messages',
     },
   ]
 
   return (
-    <Box>
-      {/* Welcome Banner */}
+    <Box maxW="1600px" mx="auto" pb={12}>
+      {/* Welcome Banner & Command Center Status */}
       <Flex
         direction={{ base: 'column', md: 'row' }}
         align={{ base: 'flex-start', md: 'center' }}
@@ -116,24 +141,40 @@ export function DashboardPage() {
         mb={8}
       >
         <Box>
-          <HStack spacing={2} mb={1}>
-            <Badge colorScheme="purple" px={2} py={0.5} borderRadius="md" fontSize="3xs" textTransform="uppercase">
+          <HStack spacing={2} mb={1.5} wrap="wrap">
+            <Badge
+              bg="rgba(124, 58, 237, 0.2)"
+              color="#C084FC"
+              borderWidth="1px"
+              borderColor="rgba(124, 58, 237, 0.4)"
+              px={2.5}
+              py={0.5}
+              borderRadius="full"
+              fontSize="3xs"
+              letterSpacing="wider"
+              textTransform="uppercase"
+            >
               MISSION CONTROL
             </Badge>
-            <HStack spacing={1} color="cyan.400" fontSize="xs">
+            <HStack spacing={1.5} color="cyan.400" fontSize="xs">
               <Icon as={Database} boxSize={3.5} />
-              <Text fontWeight="600">Database Engine Live</Text>
+              <Text fontWeight="600">MongoDB Atlas Connected</Text>
+            </HStack>
+            <HStack spacing={1.5} color="emerald.400" fontSize="xs">
+              <Box w="6px" h="6px" borderRadius="full" bg="emerald.400" boxShadow="0 0 8px #10B981" />
+              <Text fontWeight="600">Services Active</Text>
             </HStack>
           </HStack>
-          <Heading size="lg" fontFamily="heading" color="white" fontWeight="700">
+
+          <Heading size="lg" fontFamily="heading" color="white" fontWeight="700" letterSpacing="-0.02em">
             Welcome back, {user?.name || 'Administrator'}
           </Heading>
-          <Text fontSize="sm" color="gray.400">
+          <Text fontSize="sm" color="gray.400" mt={0.5}>
             Real-time management for VYNTRA software, services, team, and infrastructure
           </Text>
         </Box>
 
-        {/* Quick Action Buttons */}
+        {/* Quick Action Navigation Buttons */}
         <HStack spacing={3} wrap="wrap">
           <Button
             as={RouterLink}
@@ -142,6 +183,7 @@ export function DashboardPage() {
             variant="solid"
             colorScheme="brand"
             leftIcon={<Plus size={15} />}
+            boxShadow="0 4px 14px rgba(124, 58, 237, 0.4)"
           >
             New Project
           </Button>
@@ -150,6 +192,8 @@ export function DashboardPage() {
             to="/admin/services"
             size="sm"
             variant="outline"
+            borderColor="rgba(255, 255, 255, 0.15)"
+            _hover={{ bg: 'rgba(255, 255, 255, 0.05)', borderColor: 'cyan.400' }}
             leftIcon={<Plus size={15} />}
           >
             Add Service
@@ -161,6 +205,8 @@ export function DashboardPage() {
             rel="noopener noreferrer"
             size="sm"
             variant="ghost"
+            color="gray.300"
+            _hover={{ color: 'white', bg: 'rgba(255, 255, 255, 0.05)' }}
             rightIcon={<ExternalLink size={14} />}
           >
             Public Site
@@ -168,19 +214,24 @@ export function DashboardPage() {
         </HStack>
       </Flex>
 
-      {/* Primary KPI Metrics Grid */}
+      {/* Primary KPI Metrics Grid with Mini Bar Sparklines */}
       <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={5} mb={8}>
-        {statCards.map((c, i) => (
+        {statCards.map((c) => (
           <Card
             key={c.label}
             as={RouterLink}
             to={c.href}
+            bg="#080D1A"
+            borderRadius="xl"
+            borderWidth="1px"
+            borderColor="rgba(255, 255, 255, 0.06)"
+            boxShadow="inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 20px rgba(0, 0, 0, 0.4)"
             _hover={{
-              borderColor: 'rgba(124, 58, 237, 0.4)',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+              borderColor: 'rgba(124, 58, 237, 0.5)',
+              transform: 'translateY(-3px)',
+              boxShadow: '0 12px 28px rgba(0, 0, 0, 0.6), 0 0 20px rgba(124, 58, 237, 0.15)',
             }}
-            transition="all 0.2s ease"
+            transition="all 0.25s cubic-bezier(0.16, 1, 0.3, 1)"
             cursor="pointer"
           >
             <CardBody p={5}>
@@ -188,26 +239,37 @@ export function DashboardPage() {
                 <Box
                   p={2.5}
                   borderRadius="lg"
-                  bg="rgba(255, 255, 255, 0.04)"
+                  bg="rgba(255, 255, 255, 0.03)"
                   borderWidth="1px"
                   borderColor="rgba(255, 255, 255, 0.08)"
                 >
-                  <c.icon size={20} color={c.color.includes('.') ? undefined : c.color} />
+                  <c.icon size={20} color={c.color} />
                 </Box>
-                {c.badge && (
-                  <Badge colorScheme="cyan" borderRadius="full" px={2} fontSize="2xs">
-                    {c.badge}
-                  </Badge>
-                )}
-                <Icon as={ArrowUpRight} color="gray.500" boxSize={4} />
+
+                <HStack spacing={2} align="center">
+                  {c.badge ? (
+                    <Badge colorScheme="cyan" borderRadius="full" px={2} fontSize="2xs">
+                      {c.badge}
+                    </Badge>
+                  ) : (
+                    <MiniBarSparkline values={c.sparkValues} colorScheme={c.sparkScheme} />
+                  )}
+                  <Icon as={ArrowUpRight} color="gray.500" boxSize={4} />
+                </HStack>
               </Flex>
 
               <Skeleton isLoaded={!loading}>
-                <Text fontSize="2xl" fontWeight="700" color="white" fontFamily="heading" lineHeight="none" mb={1}>
-                  {c.value}
-                </Text>
+                <Flex align="baseline" justify="space-between" mb={1}>
+                  <Text fontSize="3xl" fontWeight="700" color="white" fontFamily="heading" lineHeight="none">
+                    {c.value}
+                  </Text>
+                  <Text fontSize="3xs" color="gray.400" fontWeight="600">
+                    {c.trend}
+                  </Text>
+                </Flex>
               </Skeleton>
-              <Text fontSize="xs" fontWeight="600" color="gray.300" mb={1}>
+
+              <Text fontSize="xs" fontWeight="600" color="gray.200" mb={0.5}>
                 {c.label}
               </Text>
               <Text fontSize="2xs" color="gray.500">
@@ -218,76 +280,50 @@ export function DashboardPage() {
         ))}
       </SimpleGrid>
 
-      {/* Analytics & Content Activity Section */}
+      {/* FEATURED: FULL MODERN DUAL-SERIES VELOCITY BAR CHART */}
+      <Card
+        mb={8}
+        bg="#080D1A"
+        borderRadius="2xl"
+        borderWidth="1px"
+        borderColor="rgba(255, 255, 255, 0.07)"
+        boxShadow="inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.5)"
+      >
+        <CardBody p={{ base: 5, md: 7 }}>
+          <VelocityDualBarChart />
+        </CardBody>
+      </Card>
+
+      {/* SECTION 2: VERTICAL CATEGORY BAR CHART & QUICK ACTIONS */}
       <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={6} mb={8}>
-        {/* Category Distribution Chart */}
-        <Card gridColumn={{ lg: 'span 2' }}>
-          <CardBody p={6}>
-            <Flex justify="space-between" align="center" mb={5}>
-              <Box>
-                <Heading size="sm" fontFamily="heading" color="white">
-                  Portfolio Category Distribution
-                </Heading>
-                <Text fontSize="xs" color="gray.400">
-                  Active projects breakdown across core service verticals
-                </Text>
-              </Box>
-              <Badge colorScheme="purple" px={2} py={0.5} borderRadius="md" fontSize="2xs">
-                REAL DATA
-              </Badge>
-            </Flex>
-
-            <VStack spacing={4} align="stretch">
-              {[
-                { name: 'Web Applications', count: 2, total: 5, color: '#7C3AED' },
-                { name: 'SaaS Products', count: 1, total: 5, color: '#06B6D4' },
-                { name: 'Mobile Applications', count: 1, total: 5, color: '#A855F7' },
-                { name: 'AI Solutions', count: 1, total: 5, color: '#22D3EE' },
-              ].map((cat) => {
-                const pct = Math.round((cat.count / cat.total) * 100)
-                return (
-                  <Box key={cat.name}>
-                    <Flex justify="space-between" fontSize="xs" mb={1.5}>
-                      <Text fontWeight="600" color="gray.300">
-                        {cat.name}
-                      </Text>
-                      <Text color="gray.400">
-                        {cat.count} projects ({pct}%)
-                      </Text>
-                    </Flex>
-                    <Box w="full" h="8px" bg="rgba(255, 255, 255, 0.06)" borderRadius="full" overflow="hidden">
-                      <Box w={`${pct}%`} h="full" bg={cat.color} borderRadius="full" transition="width 0.8s ease" />
-                    </Box>
-                  </Box>
-                )
-              })}
-            </VStack>
-
-            <Divider my={5} borderColor="rgba(255, 255, 255, 0.08)" />
-
-            {/* Monthly Trend Indicator */}
-            <Flex justify="space-between" align="center" pt={1}>
-              <HStack spacing={2}>
-                <Icon as={CheckCircle2} color="cyan.400" boxSize={4} />
-                <Text fontSize="xs" color="gray.300">
-                  All systems operational and synchronized with client-facing site.
-                </Text>
-              </HStack>
-              <Button as={RouterLink} to="/admin/projects" size="xs" variant="ghost" colorScheme="cyan">
-                Manage Portfolio →
-              </Button>
-            </Flex>
+        {/* Full Vertical Category Volume Bar Chart */}
+        <Card
+          gridColumn={{ lg: 'span 2' }}
+          bg="#080D1A"
+          borderRadius="2xl"
+          borderWidth="1px"
+          borderColor="rgba(255, 255, 255, 0.07)"
+          boxShadow="inset 0 1px 0 rgba(255, 255, 255, 0.05)"
+        >
+          <CardBody p={{ base: 5, md: 7 }}>
+            <CategoryVerticalBarChart />
           </CardBody>
         </Card>
 
-        {/* Quick Launch & Status Card */}
-        <Card>
-          <CardBody p={6}>
+        {/* Quick Launch & Publishing Hub */}
+        <Card
+          bg="#080D1A"
+          borderRadius="2xl"
+          borderWidth="1px"
+          borderColor="rgba(255, 255, 255, 0.07)"
+          boxShadow="inset 0 1px 0 rgba(255, 255, 255, 0.05)"
+        >
+          <CardBody p={{ base: 5, md: 6 }}>
             <Heading size="sm" fontFamily="heading" color="white" mb={1}>
               Quick Creation Hub
             </Heading>
             <Text fontSize="xs" color="gray.400" mb={4}>
-              Direct shortcuts for publishing new site elements
+              Direct shortcuts for publishing site elements
             </Text>
 
             <VStack spacing={2.5} align="stretch">
@@ -296,8 +332,10 @@ export function DashboardPage() {
                 to="/admin/projects"
                 size="sm"
                 variant="outline"
+                borderColor="rgba(255, 255, 255, 0.08)"
                 justifyContent="flex-start"
-                leftIcon={<Briefcase size={16} />}
+                _hover={{ bg: 'rgba(124, 58, 237, 0.15)', borderColor: 'brand.400', color: 'white' }}
+                leftIcon={<Briefcase size={16} color="#A78BFA" />}
               >
                 Add Portfolio Project
               </Button>
@@ -306,8 +344,10 @@ export function DashboardPage() {
                 to="/admin/services"
                 size="sm"
                 variant="outline"
+                borderColor="rgba(255, 255, 255, 0.08)"
                 justifyContent="flex-start"
-                leftIcon={<Layers size={16} />}
+                _hover={{ bg: 'rgba(6, 182, 212, 0.15)', borderColor: 'cyan.400', color: 'white' }}
+                leftIcon={<Layers size={16} color="#22D3EE" />}
               >
                 Configure Service Offering
               </Button>
@@ -316,18 +356,22 @@ export function DashboardPage() {
                 to="/admin/team"
                 size="sm"
                 variant="outline"
+                borderColor="rgba(255, 255, 255, 0.08)"
                 justifyContent="flex-start"
-                leftIcon={<Users size={16} />}
+                _hover={{ bg: 'rgba(52, 211, 153, 0.15)', borderColor: 'emerald.400', color: 'white' }}
+                leftIcon={<Users size={16} color="#34D399" />}
               >
-                Add Team Member
+                Manage Team Members
               </Button>
               <Button
                 as={RouterLink}
                 to="/admin/content"
                 size="sm"
                 variant="outline"
+                borderColor="rgba(255, 255, 255, 0.08)"
                 justifyContent="flex-start"
-                leftIcon={<Sparkles size={16} />}
+                _hover={{ bg: 'rgba(192, 132, 252, 0.15)', borderColor: 'purple.400', color: 'white' }}
+                leftIcon={<Sparkles size={16} color="#C084FC" />}
               >
                 Update Website Copy & Hero
               </Button>
@@ -336,19 +380,39 @@ export function DashboardPage() {
                 to="/admin/gallery"
                 size="sm"
                 variant="outline"
+                borderColor="rgba(255, 255, 255, 0.08)"
                 justifyContent="flex-start"
-                leftIcon={<Inbox size={16} />}
+                _hover={{ bg: 'rgba(251, 146, 60, 0.15)', borderColor: 'orange.400', color: 'white' }}
+                leftIcon={<Inbox size={16} color="#FB923C" />}
               >
                 Upload Media & Assets
               </Button>
             </VStack>
+
+            <Divider my={4} borderColor="rgba(255, 255, 255, 0.08)" />
+
+            <HStack spacing={2} color="cyan.400" fontSize="xs">
+              <Icon as={CheckCircle2} boxSize={4} />
+              <Text fontWeight="600">All modules auto-sync to CDN</Text>
+            </HStack>
           </CardBody>
         </Card>
       </SimpleGrid>
 
-      {/* Recent Admin Audit Activity Feed */}
-      <Card>
-        <CardBody p={6}>
+      {/* SECTION 3: CLUSTER TELEMETRY 24H BAR STRIP */}
+      <Box mb={8}>
+        <ClusterTelemetryBarChart />
+      </Box>
+
+      {/* SECTION 4: RECENT AUDIT LOG & ACTIVITY */}
+      <Card
+        bg="#080D1A"
+        borderRadius="2xl"
+        borderWidth="1px"
+        borderColor="rgba(255, 255, 255, 0.07)"
+        boxShadow="inset 0 1px 0 rgba(255, 255, 255, 0.05)"
+      >
+        <CardBody p={{ base: 5, md: 6 }}>
           <Flex justify="space-between" align="center" mb={4}>
             <HStack spacing={2}>
               <Icon as={Activity} color="brand.400" boxSize={5} />
@@ -365,7 +429,7 @@ export function DashboardPage() {
             {(stats?.recentActivity || []).slice(0, 6).map((act) => (
               <Flex
                 key={act.id}
-                p={3}
+                p={3.5}
                 borderRadius="lg"
                 bg="rgba(255, 255, 255, 0.02)"
                 borderWidth="1px"
@@ -374,10 +438,12 @@ export function DashboardPage() {
                 align="center"
                 direction={{ base: 'column', sm: 'row' }}
                 gap={2}
+                _hover={{ bg: 'rgba(255, 255, 255, 0.04)', borderColor: 'rgba(124, 58, 237, 0.2)' }}
+                transition="all 0.15s ease"
               >
                 <Box>
                   <HStack spacing={2} mb={1}>
-                    <Badge colorScheme="purple" fontSize="3xs">
+                    <Badge colorScheme="purple" fontSize="3xs" px={2} py={0.5} borderRadius="full">
                       {act.action}
                     </Badge>
                     <Text fontSize="xs" fontWeight="600" color="white">

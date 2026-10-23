@@ -123,8 +123,21 @@ export function TeamPage() {
   }
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const targetInput = e.target
+    const file = targetInput.files?.[0]
     if (!file) return
+
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Invalid File', description: 'Please select an image file.', status: 'warning' })
+      targetInput.value = ''
+      return
+    }
+
+    if (file.size > 25 * 1024 * 1024) {
+      toast({ title: 'File too large', description: 'Max 25MB permitted', status: 'warning' })
+      targetInput.value = ''
+      return
+    }
 
     const reader = new FileReader()
     reader.onload = async () => {
@@ -134,6 +147,8 @@ export function TeamPage() {
         toast({ title: 'Photo uploaded', status: 'success', duration: 2500 })
       } catch (err: any) {
         toast({ title: 'Upload failed', description: err.message, status: 'error' })
+      } finally {
+        targetInput.value = ''
       }
     }
     reader.readAsDataURL(file)

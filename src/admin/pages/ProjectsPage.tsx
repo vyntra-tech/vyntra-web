@@ -173,11 +173,19 @@ export function ProjectsPage() {
   }
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const targetInput = e.target
+    const file = targetInput.files?.[0]
     if (!file) return
 
-    if (file.size > 10 * 1024 * 1024) {
-      toast({ title: 'File too large', description: 'Max 10MB permitted', status: 'warning' })
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Invalid File', description: 'Please select an image file.', status: 'warning' })
+      targetInput.value = ''
+      return
+    }
+
+    if (file.size > 25 * 1024 * 1024) {
+      toast({ title: 'File too large', description: 'Max 25MB permitted', status: 'warning' })
+      targetInput.value = ''
       return
     }
 
@@ -189,6 +197,8 @@ export function ProjectsPage() {
         toast({ title: 'Thumbnail uploaded', status: 'success', duration: 2500 })
       } catch (err: any) {
         toast({ title: 'Upload failed', description: err.message, status: 'error' })
+      } finally {
+        targetInput.value = ''
       }
     }
     reader.readAsDataURL(file)

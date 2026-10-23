@@ -41,8 +41,8 @@ if (!fs.existsSync(uploadsDir)) {
 app.use(helmet({ contentSecurityPolicy: false }))
 app.use(cors({ origin: CLIENT_ORIGIN || true }))
 // Increased limit for base64 media uploads
-app.use(express.json({ limit: '25mb' }))
-app.use(express.urlencoded({ extended: true, limit: '25mb' }))
+app.use(express.json({ limit: '50mb' }))
+app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 // Serve uploaded media
 app.use('/uploads', express.static(uploadsDir))
@@ -702,41 +702,72 @@ app.delete('/api/admin/gallery/:id', authenticateToken, requireRole(['admin']), 
 // File upload endpoint (supports base64 data URLs)
 app.post('/api/admin/media/upload', authenticateToken, (req, res) => {
   const { name, data, type } = req.body || {}
-  if (!data) {
+  if (!data || typeof data !== 'string') {
     return res.status(400).json({ ok: false, error: 'No image data provided.' })
   }
 
   try {
-    const matches = data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
-    if (!matches || matches.length !== 3) {
-      return res.status(400).json({ ok: false, error: 'Invalid base64 payload.' })
+    let mimeType = 'image/png'
+    let base64Data = data.trim()
+
+    // Handle data URL scheme (e.g. data:image/png;base64,.... or data:image/svg+xml;charset=utf-8;base64,....)
+    if (base64Data.startsWith('data:')) {
+      const commaIdx = base64Data.indexOf(',')
+      if (commaIdx !== -1) {
+        const header = base64Data.slice(5, commaIdx)
+        const semiIdx = header.indexOf(';')
+        if (semiIdx !== -1) {
+          mimeType = header.slice(0, semiIdx).toLowerCase().trim()
+        } else {
+          mimeType = header.toLowerCase().trim()
+        }
+        base64Data = base64Data.slice(commaIdx + 1)
+      }
     }
 
-    const mimeType = matches[1]
-    const base64Data = matches[2]
-    const buffer = Buffer.from(base64Data, 'base64')
+    // Strip any whitespace or line breaks
+    base64Data = base64Data.replace(/[\r\n\s]+/g, '')
+    if (!base64Data) {
+      return res.status(400).json({ ok: false, error: 'Empty base64 data.' })
+    }
 
-    // Validation: 10MB max
-    if (buffer.length > 10 * 1024 * 1024) {
-      return res.status(400).json({ ok: false, error: 'File size exceeds maximum 10MB limit.' })
+    const buffer = Buffer.from(base64Data, 'base64')
+    if (buffer.length === 0) {
+      return res.status(400).json({ ok: false, error: 'Failed to decode image data.' })
+    }
+
+    // Validation: 25MB max
+    if (buffer.length > 25 * 1024 * 1024) {
+      return res.status(400).json({ ok: false, error: 'File size exceeds maximum 25MB limit.' })
     }
 
     // Determine extension
-    let ext = '.png'
-    if (mimeType === 'image/jpeg' || mimeType === 'image/jpg') ext = '.jpg'
-    else if (mimeType === 'image/webp') ext = '.webp'
-    else if (mimeType === 'image/svg+xml') ext = '.svg'
-    else if (mimeType === 'image/gif') ext = '.gif'
+    const originalExt = path.extname(name || '').toLowerCase()
+    let ext = originalExt
+    if (!ext || ext.length < 2) {
+      if (mimeType.includes('jpeg') || mimeType.includes('jpg')) ext = '.jpg'
+      else if (mimeType.includes('webp')) ext = '.webp'
+      else if (mimeType.includes('svg')) ext = '.svg'
+      else if (mimeType.includes('gif')) ext = '.gif'
+      else if (mimeType.includes('avif')) ext = '.avif'
+      else if (mimeType.includes('png')) ext = '.png'
+      else ext = '.png'
+    }
 
-    const cleanName = (name || 'upload').replace(/[^a-zA-Z0-9_-]/g, '_')
-    const fileName = `${Date.now()}-${cleanName}${ext}`
+    const rawBaseName = originalExt ? path.basename(name || 'upload', originalExt) : (name || 'upload')
+    const cleanBaseName = rawBaseName.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 50) || 'upload'
+    const fileName = `${Date.now()}-${cleanBaseName}${ext}`
     const filePath = path.join(uploadsDir, fileName)
+
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true })
+    }
 
     fs.writeFileSync(filePath, buffer)
     const url = `/uploads/${fileName}`
 
     logActivity(
-      `${req.user.name} (${req.user.email})`,
+      req.user?.name ? `${req.user.name} (${req.user.email})` : 'Admin',
       'MEDIA_UPLOADED',
       `File: ${fileName}`,
       `Size: ${(buffer.length / 1024).toFixed(1)} KB`
