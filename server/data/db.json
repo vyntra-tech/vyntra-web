@@ -711,6 +711,18 @@
   },
   "messages": [
     {
+      "name": "Shubham Uprade",
+      "email": "shubhamuprade0@gmail.com",
+      "company": "",
+      "type": "Software or website",
+      "budget": "₹25,000–₹50,000",
+      "description": "[Mobile: +919977413362]\n[Service: Website Development]\n[Budget: ₹25,000–₹50,000]\n--- Project Requirements ---\nhi i am shubham uprade",
+      "status": "archived",
+      "id": "item-1792752109462-46d2a5ac",
+      "createdAt": "2026-10-23T10:41:49.463Z",
+      "updatedAt": "2026-10-23T10:42:22.344Z"
+    },
+    {
       "id": "msg-seed-1",
       "name": "Aarav Mehta",
       "email": "aarav@fintechflow.io",
@@ -735,6 +747,14 @@
     }
   ],
   "activity": [
+    {
+      "id": "act-1792752109467-a48ac4",
+      "actor": "Visitor (shubhamuprade0@gmail.com)",
+      "action": "CONTACT_FORM_SUBMISSION",
+      "target": "Inquiry: Software or website",
+      "details": "Company: N/A",
+      "timestamp": "2026-10-23T10:41:49.468Z"
+    },
     {
       "id": "act-1792733756192-db0118",
       "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
