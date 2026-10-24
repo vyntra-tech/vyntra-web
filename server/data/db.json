@@ -717,10 +717,10 @@
       "type": "Software or website",
       "budget": "₹25,000–₹50,000",
       "description": "[Mobile: +919977413362]\n[Service: Website Development]\n[Budget: ₹25,000–₹50,000]\n--- Project Requirements ---\nhi i am shubham uprade",
-      "status": "archived",
+      "status": "read",
       "id": "item-1792752109462-46d2a5ac",
       "createdAt": "2026-10-23T10:41:49.463Z",
-      "updatedAt": "2026-10-23T10:42:22.344Z"
+      "updatedAt": "2026-10-24T05:59:03.945Z"
     },
     {
       "id": "msg-seed-1",
@@ -747,6 +747,14 @@
     }
   ],
   "activity": [
+    {
+      "id": "act-1792821415367-ca623c",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-24T05:56:55.370Z"
+    },
     {
       "id": "act-1792752109467-a48ac4",
       "actor": "Visitor (shubhamuprade0@gmail.com)",

@@ -2,14 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from '../lib/gsap'
 import vyntraLogo from '../assets/vyntra-logo.png'
 const LINKS: [string, string][] = [
-  ['home', 'Home'],
   ['about', 'About'],
   ['services', 'Services'],
   ['work', 'Work'],
   ['products', 'Products'],
-  ['team', 'Team'],
-  ['gallery', 'Gallery'],
-  ['contact', 'Contact'],
 ]
 
 export default function Navbar() {
