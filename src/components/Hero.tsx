@@ -36,7 +36,7 @@ export default function Hero() {
         <h1 aria-label="We turn ideas into digital experiences.">
           <span className="ln"><span>We turn ideas</span></span><span className="ln"><span>into digital</span></span><span className="ln"><span>experiences.</span></span>
         </h1>
-        <p>From custom software, AI-powered solutions, and cloud architectures to scalable digital products, VYNTRA Technologies helps businesses transform ideas into meaningful technology.</p>
+        <p>From custom software, AI-powered solutions, and cloud architectures to scalable digital products, VYNTRA Solutions helps businesses transform ideas into meaningful technology.</p>
         <div className="ctas"><a className="btn p" href="#work">Explore Our Work</a><a className="btn" href="#contact">Start a Project</a></div>
       </div>
       <span className="scr" aria-hidden="true" />

@@ -35,10 +35,10 @@ export default function Navbar() {
   return (
     <nav className={solid ? 's' : ''}>
       <div className="wrap nb">
-        <a className="logo" href="#home" aria-label="VYNTRA Technologies home">
+        <a className="logo" href="#home" aria-label="VYNTRA Solutions home">
           <img
             src={vyntraLogo}
-            alt="VYNTRA"
+            alt="VYNTRA Solutions"
             style={{
               width: '28px',
               height: '28px',

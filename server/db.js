@@ -581,7 +581,7 @@ function getInitialSeedData() {
       hero: {
         tagline: 'BUILD. DEPLOY. SCALE.',
         title: 'We turn ambitious ideas into digital reality.',
-        subtitle: 'VYNTRA Technologies designs, engineers, and scales AI-powered software, cloud infrastructure, and modern digital platforms for forward-thinking enterprises.',
+        subtitle: 'VYNTRA Solutions designs, engineers, and scales AI-powered software, cloud infrastructure, and modern digital platforms for forward-thinking enterprises.',
         primaryCtaLabel: 'Explore Services',
         primaryCtaUrl: '#services',
         secondaryCtaLabel: 'Get In Touch',
@@ -590,7 +590,7 @@ function getInitialSeedData() {
       about: {
         label: 'ABOUT VYNTRA',
         heading: 'We Build Digital Products That Matter.',
-        description: 'VYNTRA Technologies helps startups and enterprises build modern web applications, scalable cloud solutions, and AI-powered software through thoughtful design and reliable engineering.',
+        description: 'VYNTRA Solutions helps startups and enterprises build modern web applications, scalable cloud solutions, and AI-powered software through thoughtful design and reliable engineering.',
         stats: [
           { value: '20+', label: 'Projects Delivered' },
           { value: '15+', label: 'Startup Clients' },
@@ -609,10 +609,10 @@ function getInitialSeedData() {
         statement: 'Our mission is to eliminate technical friction, giving ambitious founders the architectural edge to innovate, deploy, and dominate their category.'
       },
       seo: {
-        title: 'VYNTRA Technologies | Build. Deploy. Scale. | Software, AI & Cloud',
-        description: 'VYNTRA Technologies builds AI-powered software, next-generation cloud solutions, and developer automation tools. Build. Deploy. Scale.',
+        title: 'VYNTRA Solutions | Build. Deploy. Scale. | Software, AI & Cloud',
+        description: 'VYNTRA Solutions builds AI-powered software, next-generation cloud solutions, and developer automation tools. Build. Deploy. Scale.',
         keywords: 'software development, AI solutions, cloud infrastructure, SaaS development, React, Node.js, VYNTRA',
-        ogTitle: 'VYNTRA Technologies',
+        ogTitle: 'VYNTRA Solutions',
         ogDescription: 'Build. Deploy. Scale. We turn ambitious ideas into digital reality.',
         ogImage: '/og-image.png'
       }
@@ -660,7 +660,7 @@ function getInitialSeedData() {
       }
     ],
     settings: {
-      siteName: 'VYNTRA Technologies',
+      siteName: 'VYNTRA Solutions',
       tagline: 'Build. Deploy. Scale.',
       contactEmail: 'contact@vyntra.tech',
       supportEmail: 'support@vyntra.tech',

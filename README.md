@@ -1,4 +1,4 @@
-# VYNTRA Technologies – Company Website
+# VYNTRA Solutions – Company Website
 
 Build. Deploy. Scale. React + TypeScript + Vite frontend, GSAP/ScrollTrigger animations, React Three Fiber hero, Express contact API.
 

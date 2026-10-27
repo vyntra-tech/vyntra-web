@@ -89,7 +89,7 @@ export function Vision() {
       <div className="wrap">
         <Head label="Our Technology Vision" title="Engineering intelligence, cloud resilience, and developer velocity." />
         <p className="lead rv" style={{ marginTop: '1.25rem' }}>
-          At VYNTRA Technologies, we believe the next era of digital systems must be autonomous, cloud-native, and developer-empowered. We focus our core engineering on three transformative pillars:
+          At VYNTRA Solutions, we believe the next era of digital systems must be autonomous, cloud-native, and developer-empowered. We focus our core engineering on three transformative pillars:
         </p>
 
         <div className="vision-grid">
@@ -143,7 +143,7 @@ export function Vision() {
             <span>SCALE.</span>
           </div>
           <p className="vision-banner-sub">
-            The core engineering philosophy driving every solution and product we build at VYNTRA Technologies.
+            The core engineering philosophy driving every solution and product we build at VYNTRA Solutions.
           </p>
         </div>
       </div>
@@ -248,7 +248,7 @@ export function FutureProducts() {
       <div className="wrap">
         <Head label="In-house Innovations" title="Future Products in the Pipeline." />
         <p className="lead rv" style={{ marginTop: '1.25rem' }}>
-          Proprietary cloud platforms, AI productivity engines, and developer tools currently engineered in-house by VYNTRA Technologies. Currently in active development and planned testing phases.
+          Proprietary cloud platforms, AI productivity engines, and developer tools currently engineered in-house by VYNTRA Solutions. Currently in active development and planned testing phases.
         </p>
 
         <div className="future-cards">

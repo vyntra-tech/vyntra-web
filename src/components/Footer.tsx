@@ -133,10 +133,10 @@ export default function Footer() {
         <div className="footer-main-grid">
           {/* Column 1: Brand Info & Social Media Icons */}
           <div className="footer-brand-col footer-reveal">
-            <a className="footer-logo" href="#home" aria-label="VYNTRA Technologies home">
+            <a className="footer-logo" href="#home" aria-label="VYNTRA Solutions home">
               <img
                 src={vyntraLogo}
-                alt="VYNTRA"
+                alt="VYNTRA Solutions"
                 style={{
                   width: '32px',
                   height: '32px',
@@ -144,7 +144,7 @@ export default function Footer() {
                   filter: 'drop-shadow(0 2px 10px rgba(124, 58, 237, 0.45))',
                 }}
               />
-              <span>VYNTRA Technologies</span>
+              <span>VYNTRA Solutions</span>
             </a>
 
             <p className="footer-brand-desc">
@@ -261,7 +261,7 @@ export default function Footer() {
               </div>
               <div className="footer-contact-item">
                 <span className="footer-contact-label">Direct Email:</span>
-                <a href="mailto:vyntratechnologies@gmail.com" className="footer-contact-value footer-link-highlight">
+                <a href="mailto:hellow.vyntra@gmail.com" className="footer-contact-value footer-link-highlight">
                   hellow.vyntra@gmail.com
                 </a>
               </div>
@@ -276,7 +276,7 @@ export default function Footer() {
         {/* 3. Bottom Copyright & Credits Bar */}
         <div className="footer-bottom-bar footer-reveal">
           <p className="footer-copyright">
-            © {new Date().getFullYear()} VYNTRA Technologies. All rights reserved. ·{' '}
+            © {new Date().getFullYear()} VYNTRA Solutions. All rights reserved. ·{' '}
             <a href="/admin/dashboard" style={{ color: '#06B6D4', textDecoration: 'none' }}>
               Admin Portal
             </a>

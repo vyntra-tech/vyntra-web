@@ -25,7 +25,7 @@ export const aboutContent = {
   label: 'ABOUT VYNTRA',
   heading: 'We Build Digital Products That Matter.',
   description:
-    'VYNTRA Technologies helps startups and enterprises build modern web applications, scalable cloud solutions, and AI-powered software through thoughtful design and reliable engineering.',
+    'VYNTRA Solutions helps startups and enterprises build modern web applications, scalable cloud solutions, and AI-powered software through thoughtful design and reliable engineering.',
   stats: [
     { value: '20+', label: 'Projects Delivered' },
     { value: '15+', label: 'Startup Clients' },
