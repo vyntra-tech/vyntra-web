@@ -677,6 +677,14 @@
   ],
   "activity": [
     {
+      "id": "act-1793279695294-63b677",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-29T13:14:55.294Z"
+    },
+    {
       "id": "act-1793244525729-bcc490",
       "actor": "Chandrabhan Gadeshwar",
       "action": "GALLERY_ITEM_ADDED",
