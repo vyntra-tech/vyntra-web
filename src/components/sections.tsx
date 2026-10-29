@@ -1,11 +1,11 @@
-import { useState, useEffect, type ReactNode } from 'react'
-import { services } from '../data/services'
-import { projects } from '../data/projects'
-import { futureProducts } from '../data/products'
-import { steps, why } from '../data/content'
-import type { Showcase } from '../types'
+import { useState, useEffect, useRef, type ReactNode } from 'react'
+import type { Offering, Showcase } from '../types'
 import { Clock } from 'lucide-react'
-import { projectsApi } from '../services/api'
+import { projectsApi, servicesApi, productsApi } from '../services/api'
+import { useContent } from '../context/ContentContext'
+import { getImageUrl, handleImageError } from '../lib/image'
+import { steps, why } from '../data/content'
+import { gsap, useGSAP, prefersReducedMotion } from '../lib/gsap'
 
 /** Splits a heading into words so GSAP can animate them (see App.tsx). */
 function Split({ children }: { children: string }) {
@@ -46,34 +46,95 @@ const Sec = ({ id, bg, children }: { id: string; bg?: boolean; children: ReactNo
 export { default as About } from './About'
 
 export function Services() {
+  const [serviceList, setServiceList] = useState<Offering[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const calm = prefersReducedMotion()
+
+  useEffect(() => {
+    let isMounted = true
+    servicesApi
+      .getPublic()
+      .then((data) => {
+        if (isMounted) {
+          setServiceList(Array.isArray(data) ? data : [])
+          setLoading(false)
+        }
+      })
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message || 'Failed to load services')
+          setLoading(false)
+        }
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  useGSAP(
+    () => {
+      if (calm || serviceList.length === 0 || !containerRef.current) return
+      const cards = containerRef.current.querySelectorAll('.sc')
+      if (cards.length === 0) return
+
+      gsap.from(cards, {
+        opacity: 0,
+        y: 40,
+        stagger: 0.15,
+        duration: 0.8,
+        scrollTrigger: { trigger: containerRef.current, start: 'top 80%', once: true },
+        clearProps: 'all',
+      })
+    },
+    { scope: containerRef, dependencies: [serviceList.length] }
+  )
+
   return (
     <Sec id="services" bg>
       <div className="wrap">
         <Head label="What we do" title="Technology built around your ambition." />
-        <div className="sv">
-          {services.map((s, i) => (
-            <article
-              key={s.title}
-              className="sc"
-              onPointerMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect()
-                e.currentTarget.style.setProperty('--x', e.clientX - r.left + 'px')
-                e.currentTarget.style.setProperty('--y', e.clientY - r.top + 'px')
-              }}
-            >
-              <span className="no">0{i + 1}</span>
-              <div>
-                <h3>{s.title}</h3>
-                <p>{s.description}</p>
-              </div>
-              <ul>
-                {s.capabilities.map((c) => (
-                  <li key={c}>{c}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
+        {loading && serviceList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            Loading engineering services...
+          </div>
+        ) : error && serviceList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            {error}
+          </div>
+        ) : serviceList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            No services currently published.
+          </div>
+        ) : (
+          <div className="sv" ref={containerRef}>
+            {serviceList.map((s, i) => (
+              <article
+                key={s.id || s.title}
+                className="sc"
+                onPointerMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect()
+                  e.currentTarget.style.setProperty('--x', e.clientX - r.left + 'px')
+                  e.currentTarget.style.setProperty('--y', e.clientY - r.top + 'px')
+                }}
+              >
+                <span className="no">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.description}</p>
+                </div>
+                {s.capabilities && s.capabilities.length > 0 && (
+                  <ul>
+                    {s.capabilities.map((c) => (
+                      <li key={c}>{c}</li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </Sec>
   )
@@ -81,15 +142,21 @@ export function Services() {
 
 /**
  * Our Technology Vision section
- * Highlights VYNTRA's focus on AI-powered software, cloud solutions, and developer tools.
+ * Uses CMS backend content for heading & mission statement.
  */
 export function Vision() {
+  const { content } = useContent()
+  const vision = content?.vision
+
+  const heading = vision?.heading || 'Engineering intelligence, cloud resilience, and developer velocity.'
+  const statement = vision?.statement || 'At VYNTRA Solutions, we believe the next era of digital systems must be autonomous, cloud-native, and developer-empowered. We focus our core engineering on three transformative pillars:'
+
   return (
     <Sec id="vision">
       <div className="wrap">
-        <Head label="Our Technology Vision" title="Engineering intelligence, cloud resilience, and developer velocity." />
+        <Head label="Our Technology Vision" title={heading} />
         <p className="lead rv" style={{ marginTop: '1.25rem' }}>
-          At VYNTRA Solutions, we believe the next era of digital systems must be autonomous, cloud-native, and developer-empowered. We focus our core engineering on three transformative pillars:
+          {statement}
         </p>
 
         <div className="vision-grid">
@@ -152,6 +219,8 @@ export function Vision() {
 }
 
 function Card({ item, cta }: { item: Showcase; cta: string }) {
+  const imageUrl = getImageUrl(item.image)
+
   return (
     <article className="card rv">
       <div className="pv">
@@ -167,14 +236,24 @@ function Card({ item, cta }: { item: Showcase; cta: string }) {
             aria-label={`Open ${item.name} live demo`}
             style={{ display: 'block', width: '100%', height: '100%' }}
           >
-            {item.image ? (
-              <img src={item.image} alt={item.name} loading="lazy" />
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={item.name}
+                loading="lazy"
+                onError={handleImageError}
+              />
             ) : (
               <div className="mock"><b /><b /><b /></div>
             )}
           </a>
-        ) : item.image ? (
-          <img src={item.image} alt={item.name} loading="lazy" />
+        ) : imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={item.name}
+            loading="lazy"
+            onError={handleImageError}
+          />
         ) : (
           <div className="mock"><b /><b /><b /></div>
         )}
@@ -204,19 +283,25 @@ function Card({ item, cta }: { item: Showcase; cta: string }) {
 }
 
 export function Work() {
-  const [projectList, setProjectList] = useState<Showcase[]>(projects)
+  const [projectList, setProjectList] = useState<Showcase[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let isMounted = true
     projectsApi
       .getPublic()
       .then((data) => {
-        if (isMounted && Array.isArray(data) && data.length > 0) {
-          setProjectList(data)
+        if (isMounted) {
+          setProjectList(Array.isArray(data) ? data : [])
+          setLoading(false)
         }
       })
-      .catch(() => {
-        // Fallback gracefully to bundled projects
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message || 'Failed to load projects')
+          setLoading(false)
+        }
       })
     return () => {
       isMounted = false
@@ -227,11 +312,25 @@ export function Work() {
     <Sec id="work">
       <div className="wrap">
         <Head label="Selected work" title="Real projects. Thoughtful solutions." />
-        <div className="cards">
-          {projectList.map((p, i) => (
-            <Card key={p.name || i} item={p} cta="View live product" />
-          ))}
-        </div>
+        {loading && projectList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            Loading portfolio projects...
+          </div>
+        ) : error && projectList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            {error}
+          </div>
+        ) : projectList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            No projects published yet.
+          </div>
+        ) : (
+          <div className="cards">
+            {projectList.map((p, i) => (
+              <Card key={p.id || p.name || i} item={p} cta="View live product" />
+            ))}
+          </div>
+        )}
       </div>
     </Sec>
   )
@@ -239,10 +338,37 @@ export function Work() {
 
 /**
  * Future Products Section
- * Showcases VYNTRA Cloud, VYNTRA AI, and VYNTRA Studio.
- * Clearly marked as In Development or Planned.
+ * Showcases in-house innovations dynamically from the backend products API.
  */
 export function FutureProducts() {
+  const [productList, setProductList] = useState<Showcase[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let isMounted = true
+    productsApi
+      .getPublic()
+      .then((data) => {
+        if (isMounted) {
+          setProductList(Array.isArray(data) ? data : [])
+          setLoading(false)
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setProductList([])
+          setLoading(false)
+        }
+      })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  if (!loading && productList.length === 0) {
+    return null
+  }
+
   return (
     <Sec id="products" bg>
       <div className="wrap">
@@ -251,83 +377,91 @@ export function FutureProducts() {
           Proprietary cloud platforms, AI productivity engines, and developer tools currently engineered in-house by VYNTRA Solutions. Currently in active development and planned testing phases.
         </p>
 
-        <div className="future-cards">
-          {futureProducts.map((prod) => (
-            <article key={prod.name} className="future-card rv">
-              {/* Interactive terminal preview graphic */}
-              <div className="product-preview" aria-hidden="true">
-                <div className="preview-terminal">
-                  <div className="terminal-header">
-                    <span className="term-dot red" />
-                    <span className="term-dot yellow" />
-                    <span className="term-dot green" />
-                    <span className="term-title">
-                      {prod.previewType === 'cloud'
-                        ? 'vyntra-cloud ~ deploy-monitor'
-                        : prod.previewType === 'ai'
-                        ? 'vyntra-ai ~ workflow-engine'
-                        : 'vyntra-studio ~ dev-workspace'}
+        {loading && productList.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)' }}>
+            Loading product innovations...
+          </div>
+        ) : (
+          <div className="future-cards">
+            {productList.map((prod) => (
+              <article key={prod.id || prod.name} className="future-card rv">
+                {/* Interactive terminal preview graphic */}
+                <div className="product-preview" aria-hidden="true">
+                  <div className="preview-terminal">
+                    <div className="terminal-header">
+                      <span className="term-dot red" />
+                      <span className="term-dot yellow" />
+                      <span className="term-dot green" />
+                      <span className="term-title">
+                        {prod.previewType === 'cloud'
+                          ? 'vyntra-cloud ~ deploy-monitor'
+                          : prod.previewType === 'ai'
+                          ? 'vyntra-ai ~ workflow-engine'
+                          : 'vyntra-studio ~ dev-workspace'}
+                      </span>
+                    </div>
+                    <div className="terminal-body">
+                      {prod.previewType === 'cloud' ? (
+                        <>
+                          <p className="term-line success">✓ [AI Engine] Cluster auto-configured (us-east-1)</p>
+                          <p className="term-line info">ℹ [Telemetry] Real-time deployment logs streaming</p>
+                          <p className="term-line active">▶ [Status] AI diagnostics &amp; health: OPTIMAL</p>
+                        </>
+                      ) : prod.previewType === 'ai' ? (
+                        <>
+                          <p className="term-line success">✓ [Agent Mesh] Autonomous workflows active</p>
+                          <p className="term-line info">ℹ [Intelligence] Enterprise context graph indexed</p>
+                          <p className="term-line active">▶ [Automation] Routine tasks optimized by 80%</p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="term-line success">✓ [Scaffolding] Component schema verified</p>
+                          <p className="term-line info">ℹ [Live Preview] WebContainer instance booted</p>
+                          <p className="term-line active">▶ [Generation] UI scaffold ready for export</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="future-card-body">
+                  <div className="future-card-meta">
+                    <span className="product-cat">{prod.category}</span>
+                    <span
+                      className={`product-status-pill ${
+                        prod.status === 'Planned' ? 'planned' : 'in-dev'
+                      }`}
+                    >
+                      <span className={`status-dot ${prod.status !== 'Planned' ? 'pulsing' : ''}`} />
+                      {prod.status}
                     </span>
                   </div>
-                  <div className="terminal-body">
-                    {prod.previewType === 'cloud' ? (
-                      <>
-                        <p className="term-line success">✓ [AI Engine] Cluster auto-configured (us-east-1)</p>
-                        <p className="term-line info">ℹ [Telemetry] Real-time deployment logs streaming</p>
-                        <p className="term-line active">▶ [Status] AI diagnostics &amp; health: OPTIMAL</p>
-                      </>
-                    ) : prod.previewType === 'ai' ? (
-                      <>
-                        <p className="term-line success">✓ [Agent Mesh] Autonomous workflows active</p>
-                        <p className="term-line info">ℹ [Intelligence] Enterprise context graph indexed</p>
-                        <p className="term-line active">▶ [Automation] Routine tasks optimized by 80%</p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="term-line success">✓ [Scaffolding] Component schema verified</p>
-                        <p className="term-line info">ℹ [Live Preview] WebContainer instance booted</p>
-                        <p className="term-line active">▶ [Generation] UI scaffold ready for export</p>
-                      </>
-                    )}
+
+                  <h3>{prod.name}</h3>
+                  <p>{prod.description}</p>
+
+                  {prod.tech && prod.tech.length > 0 && (
+                    <div className="tg" style={{ marginBottom: '1.25rem' }}>
+                      {prod.tech.map((t) => (
+                        <span key={t}>{t}</span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="product-stage-note">
+                    <Clock size={13} aria-hidden="true" />
+                    <span>
+                      {prod.status === 'Planned'
+                        ? 'Architecture & Specification Phase'
+                        : 'Active Engineering · Closed Beta Testing'}
+                    </span>
                   </div>
                 </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="future-card-body">
-                <div className="future-card-meta">
-                  <span className="product-cat">{prod.category}</span>
-                  <span
-                    className={`product-status-pill ${
-                      prod.status === 'Planned' ? 'planned' : 'in-dev'
-                    }`}
-                  >
-                    <span className={`status-dot ${prod.status !== 'Planned' ? 'pulsing' : ''}`} />
-                    {prod.status}
-                  </span>
-                </div>
-
-                <h3>{prod.name}</h3>
-                <p>{prod.description}</p>
-
-                <div className="tg" style={{ marginBottom: '1.25rem' }}>
-                  {prod.tech.map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
-                </div>
-
-                <div className="product-stage-note">
-                  <Clock size={13} aria-hidden="true" />
-                  <span>
-                    {prod.status === 'Planned'
-                      ? 'Architecture & Specification Phase'
-                      : 'Active Engineering · Closed Beta Testing'}
-                  </span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </Sec>
   )

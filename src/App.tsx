@@ -10,6 +10,7 @@ import Team from './components/Team'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import { AdminRoutes } from './admin/AdminRoutes'
+import { ContentProvider } from './context/ContentContext'
 
 function PublicSite() {
   const root = useRef<HTMLDivElement>(null)
@@ -69,56 +70,58 @@ function PublicSite() {
       }
 
       // Typography split reveal
-      gsap.utils.toArray<HTMLElement>('.split').forEach((h) =>
-        gsap.from(h.querySelectorAll('.w'), {
-          yPercent: 105,
-          duration: 0.8,
-          stagger: 0.05,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: h, start: 'top 85%', once: true },
-        })
-      )
+      gsap.utils.toArray<HTMLElement>('.split').forEach((h) => {
+        const words = h.querySelectorAll('.w')
+        if (words.length > 0) {
+          gsap.from(words, {
+            yPercent: 105,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: h, start: 'top 85%', once: true },
+          })
+        }
+      })
 
       // Batch element reveals
       ScrollTrigger.batch('.rv', {
         start: 'top 88%',
         once: true,
-        onEnter: (b) =>
-          gsap.from(b, {
-            opacity: 0,
-            y: 30,
-            duration: 0.7,
-            stagger: 0.12,
-            ease: 'power2.out',
-            clearProps: 'all',
-          }),
-      })
-
-      // Services card reveal
-      gsap.from('.sc', {
-        opacity: 0,
-        y: 40,
-        stagger: 0.15,
-        duration: 0.8,
-        scrollTrigger: { trigger: '.sv', start: 'top 80%', once: true },
-        clearProps: 'all',
+        onEnter: (b) => {
+          if (b && b.length > 0) {
+            gsap.from(b, {
+              opacity: 0,
+              y: 30,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: 'power2.out',
+              clearProps: 'all',
+            })
+          }
+        },
       })
 
       // Process timeline line scrub
-      gsap.to('.pg', {
-        scaleY: 1,
-        ease: 'none',
-        scrollTrigger: { trigger: '#tl', start: 'top 60%', end: 'bottom 70%', scrub: true },
-      })
-
-      steps.forEach((s) =>
-        ScrollTrigger.create({
-          trigger: s,
-          start: 'top 65%',
-          onEnter: () => s.classList.add('on'),
-          onLeaveBack: () => s.classList.remove('on'),
+      const tl = document.getElementById('tl')
+      const pg = document.querySelector('.pg')
+      if (tl && pg) {
+        gsap.to(pg, {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: tl, start: 'top 60%', end: 'bottom 70%', scrub: true },
         })
-      )
+      }
+
+      if (steps.length > 0) {
+        steps.forEach((s) =>
+          ScrollTrigger.create({
+            trigger: s,
+            start: 'top 65%',
+            onEnter: () => s.classList.add('on'),
+            onLeaveBack: () => s.classList.remove('on'),
+          })
+        )
+      }
 
       ScrollTrigger.refresh()
     },
@@ -126,24 +129,26 @@ function PublicSite() {
   )
 
   return (
-    <div ref={root}>
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Vision />
-        <Work />
-        <FutureProducts />
-        <Process />
-        <Gallery />
-        <Why />
-        <Reviews />
-        <Team />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <ContentProvider>
+      <div ref={root}>
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Services />
+          <Vision />
+          <Work />
+          <FutureProducts />
+          <Process />
+          <Gallery />
+          <Why />
+          <Reviews />
+          <Team />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </ContentProvider>
   )
 }
 

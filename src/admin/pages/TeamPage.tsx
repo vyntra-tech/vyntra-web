@@ -37,6 +37,7 @@ import { teamApi, galleryApi } from '../../services/api'
 import { ConfirmModal } from '../components/ConfirmModal'
 import { useAuth } from '../../context/AuthContext'
 import type { TeamMember } from '../../types'
+import { getImageUrl } from '../../lib/image'
 
 export function TeamPage() {
   const [team, setTeam] = useState<TeamMember[]>([])
@@ -225,7 +226,7 @@ export function TeamPage() {
                   <Avatar
                     size="lg"
                     name={m.name}
-                    src={m.image}
+                    src={getImageUrl(m.image)}
                     bg="brand.600"
                     borderWidth="2px"
                     borderColor="brand.400"
@@ -420,7 +421,7 @@ export function TeamPage() {
                 <FormLabel fontSize="xs">Profile Photo</FormLabel>
                 <HStack spacing={3}>
                   <Input type="file" accept="image/*" size="sm" p={1} onChange={handleImageUpload} />
-                  {formData.image && <Avatar size="sm" src={formData.image} />}
+                  {formData.image && <Avatar size="sm" src={getImageUrl(formData.image)} />}
                 </HStack>
               </FormControl>
             </VStack>

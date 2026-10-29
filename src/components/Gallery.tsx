@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
-import { galleryItems as defaultGalleryItems } from '../data/gallery'
 import { galleryApi } from '../services/api'
 import type { GalleryItem } from '../types'
 import { ArrowUpRight, Play, X, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import { getImageUrl, handleImageError } from '../lib/image'
 
 function Split({ children }: { children: string }) {
   return (
@@ -26,8 +26,52 @@ function Split({ children }: { children: string }) {
   )
 }
 
+function getBentoSizeClass(idx: number, count: number): string {
+  // If 5 items (common layout for current database):
+  if (count === 5) {
+    if (idx === 0) return 'bento-hero-2x2' // Bada Featured Spotlight (2x2)
+    if (idx === 1) return 'bento-wide-2x1' // Chota-wide (2x1)
+    if (idx === 2) return 'bento-square-1x1' // Chota square (1x1)
+    if (idx === 3) return 'bento-square-1x1' // Chota square (1x1)
+    if (idx === 4) return 'bento-panoramic-4x1' // Bada Wide Panoramic (4x1)
+  }
+
+  // If 6 items:
+  if (count === 6) {
+    if (idx === 0) return 'bento-hero-2x2'
+    if (idx === 1) return 'bento-wide-2x1'
+    if (idx === 2) return 'bento-square-1x1'
+    if (idx === 3) return 'bento-square-1x1'
+    if (idx === 4) return 'bento-wide-2x1'
+    if (idx === 5) return 'bento-wide-2x1'
+  }
+
+  // Repeating asymmetric rhythm for any number of items:
+  const cycle = idx % 7
+  switch (cycle) {
+    case 0:
+      return 'bento-hero-2x2' // Bada (2x2)
+    case 1:
+      return 'bento-wide-2x1' // Chota-wide (2x1)
+    case 2:
+      return 'bento-square-1x1' // Chota (1x1)
+    case 3:
+      return 'bento-square-1x1' // Chota (1x1)
+    case 4:
+      return 'bento-tall-1x2' // Bada tall (1x2)
+    case 5:
+      return 'bento-wide-2x1' // Chota-wide (2x1)
+    case 6:
+      return 'bento-panoramic-4x1' // Bada panoramic (4x1)
+    default:
+      return 'bento-square-1x1'
+  }
+}
+
 export default function Gallery() {
-  const [items, setItems] = useState<GalleryItem[]>(defaultGalleryItems)
+  const [items, setItems] = useState<GalleryItem[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<'all' | 'story' | 'celebration' | 'community'>('all')
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null)
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null)
@@ -37,12 +81,16 @@ export default function Gallery() {
     galleryApi
       .getPublic()
       .then((data) => {
-        if (isMounted && Array.isArray(data) && data.length > 0) {
-          setItems(data)
+        if (isMounted) {
+          setItems(Array.isArray(data) ? data : [])
+          setLoading(false)
         }
       })
-      .catch(() => {
-        // Fallback gracefully to default items
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message || 'Failed to load gallery')
+          setLoading(false)
+        }
       })
     return () => {
       isMounted = false
@@ -144,52 +192,130 @@ export default function Gallery() {
         </div>
 
         {/* Master Asymmetric Bento Grid (kahi bada, kahi chota) */}
-        <div className={`gallery-bento-grid rv ${activeTab !== 'all' ? 'gallery-filtered-mode' : ''}`}>
-          {filteredItems.map((item) => {
-            // Stat Card
-            if (item.type === 'stat') {
-              return (
-                <div
-                  key={item.id}
-                  className={`gallery-card gallery-stat-card gallery-item-${item.id}`}
-                  onClick={() => openLightbox(item)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={item.alt}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      openLightbox(item)
-                    }
-                  }}
-                >
-                  <div className="stat-card-grid-pattern" aria-hidden="true" />
-                  <div className="stat-card-glow" aria-hidden="true" />
-                  <div className="stat-card-content">
-                    <span className="stat-card-badge">{item.tag || 'VYNTRA IMPACT'}</span>
-                    <div className="stat-card-main-number">
-                      <span className="stat-huge-number">{item.statNumber}</span>
-                      <span className="stat-huge-unit">{item.statUnit}</span>
-                    </div>
-                    <p className="stat-card-label">{item.statLabel}</p>
-                  </div>
-                  <div className="gallery-corner-arrow" aria-label="View metric details">
-                    <ArrowUpRight size={18} />
-                  </div>
-                </div>
-              )
-            }
+        {loading && items.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3.5rem 0', color: 'var(--text-muted)' }}>
+            Loading gallery media...
+          </div>
+        ) : error && items.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3.5rem 0', color: 'var(--text-muted)' }}>
+            {error}
+          </div>
+        ) : filteredItems.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3.5rem 0', color: 'var(--text-muted)' }}>
+            No gallery items available in this category.
+          </div>
+        ) : (
+          <div className={`gallery-bento-grid rv ${activeTab !== 'all' ? 'gallery-filtered-mode' : ''}`}>
+            {filteredItems.map((item, index) => {
+              const itemImg = getImageUrl(item.image)
+              const bentoClass = getBentoSizeClass(index, filteredItems.length)
 
-            // Video Cards (Card 1 or Card 6)
-            if (item.type === 'video') {
+              // Stat Card
+              if (item.type === 'stat') {
+                return (
+                  <div
+                    key={item.id}
+                    className={`gallery-card gallery-stat-card ${bentoClass} gallery-item-${item.id}`}
+                    onClick={() => openLightbox(item)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={item.alt}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        openLightbox(item)
+                      }
+                    }}
+                  >
+                    <div className="stat-card-grid-pattern" aria-hidden="true" />
+                    <div className="stat-card-glow" aria-hidden="true" />
+                    <div className="stat-card-content">
+                      <span className="stat-card-badge">{item.tag || 'VYNTRA IMPACT'}</span>
+                      <div className="stat-card-main-number">
+                        <span className="stat-huge-number">{item.statNumber}</span>
+                        <span className="stat-huge-unit">{item.statUnit}</span>
+                      </div>
+                      <p className="stat-card-label">{item.statLabel}</p>
+                    </div>
+                    <div className="gallery-corner-arrow" aria-label="View metric details">
+                      <ArrowUpRight size={18} />
+                    </div>
+                  </div>
+                )
+              }
+
+              // Video Cards (Card 1 or Card 6)
+              if (item.type === 'video') {
+                return (
+                  <div
+                    key={item.id}
+                    className={`gallery-card gallery-video-card ${bentoClass} gallery-item-${item.id}`}
+                    onClick={() => openLightbox(item)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Play video: ${item.title}`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        openLightbox(item)
+                      }
+                    }}
+                  >
+                    <div className="gallery-img-container">
+                      <img
+                        src={itemImg}
+                        alt={item.alt}
+                        loading="lazy"
+                        className="gallery-img"
+                        onError={handleImageError}
+                      />
+                      <div className="gallery-gradient-overlay" />
+                    </div>
+
+                    {/* Top Placement Badge like reference */}
+                    {item.tag && (
+                      <div className="gallery-badge-top">
+                        <span className="gallery-badge-pill">{item.tag}</span>
+                      </div>
+                    )}
+
+                    {/* Bottom / Subtitle Badge like "Maine College" */}
+                    {item.captionBadge && (
+                      <div className="gallery-caption-badge-bottom">
+                        <span className="caption-badge-pill">{item.captionBadge}</span>
+                      </div>
+                    )}
+
+                    {/* Frosted Circular Play Button */}
+                    <div className="gallery-play-btn-wrapper" aria-hidden="true">
+                      <div className="gallery-play-btn">
+                        <Play size={20} className="gallery-play-icon" fill="white" />
+                      </div>
+                    </div>
+
+                    {/* Card Title & Meta overlay */}
+                    <div className="gallery-info-bottom">
+                      <h3 className="gallery-card-title">{item.title}</h3>
+                      {item.subtitle && <p className="gallery-card-subtitle">{item.subtitle}</p>}
+                    </div>
+
+                    {/* Top Right Arrow */}
+                    <div className="gallery-corner-arrow" aria-hidden="true">
+                      <ArrowUpRight size={18} />
+                    </div>
+                  </div>
+                )
+              }
+
+              // Image Cards (Card 2, Card 3, Card 5, Card 7)
               return (
                 <div
                   key={item.id}
-                  className={`gallery-card gallery-video-card gallery-item-${item.id}`}
+                  className={`gallery-card gallery-image-card ${bentoClass} gallery-item-${item.id}`}
                   onClick={() => openLightbox(item)}
                   role="button"
                   tabIndex={0}
-                  aria-label={`Play video: ${item.title}`}
+                  aria-label={`View photo: ${item.title}`}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault()
@@ -198,81 +324,32 @@ export default function Gallery() {
                   }}
                 >
                   <div className="gallery-img-container">
-                    <img src={item.image} alt={item.alt} loading="lazy" className="gallery-img" />
+                    <img
+                      src={itemImg}
+                      alt={item.alt}
+                      loading="lazy"
+                      className="gallery-img"
+                      onError={handleImageError}
+                    />
                     <div className="gallery-gradient-overlay" />
                   </div>
 
-                  {/* Top Placement Badge like reference */}
-                  {item.tag && (
-                    <div className="gallery-badge-top">
-                      <span className="gallery-badge-pill">{item.tag}</span>
-                    </div>
-                  )}
-
-                  {/* Bottom / Subtitle Badge like "Maine College" */}
-                  {item.captionBadge && (
-                    <div className="gallery-caption-badge-bottom">
-                      <span className="caption-badge-pill">{item.captionBadge}</span>
-                    </div>
-                  )}
-
-                  {/* Frosted Circular Play Button */}
-                  <div className="gallery-play-btn-wrapper" aria-hidden="true">
-                    <div className="gallery-play-btn">
-                      <Play size={20} className="gallery-play-icon" fill="white" />
-                    </div>
+                  {/* Top Right Circle Arrow Button matching screenshot */}
+                  <div className="gallery-corner-arrow" aria-label="Expand image">
+                    <ArrowUpRight size={18} />
                   </div>
 
-                  {/* Card Title & Meta overlay */}
+                  {/* Bottom Overlay Title & Tag */}
                   <div className="gallery-info-bottom">
+                    {item.tag && <span className="gallery-mini-tag">{item.tag}</span>}
                     <h3 className="gallery-card-title">{item.title}</h3>
                     {item.subtitle && <p className="gallery-card-subtitle">{item.subtitle}</p>}
                   </div>
-
-                  {/* Top Right Arrow */}
-                  <div className="gallery-corner-arrow" aria-hidden="true">
-                    <ArrowUpRight size={18} />
-                  </div>
                 </div>
               )
-            }
-
-            // Image Cards (Card 2, Card 3, Card 5, Card 7)
-            return (
-              <div
-                key={item.id}
-                className={`gallery-card gallery-image-card gallery-item-${item.id}`}
-                onClick={() => openLightbox(item)}
-                role="button"
-                tabIndex={0}
-                aria-label={`View photo: ${item.title}`}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    openLightbox(item)
-                  }
-                }}
-              >
-                <div className="gallery-img-container">
-                  <img src={item.image} alt={item.alt} loading="lazy" className="gallery-img" />
-                  <div className="gallery-gradient-overlay" />
-                </div>
-
-                {/* Top Right Circle Arrow Button matching screenshot */}
-                <div className="gallery-corner-arrow" aria-label="Expand image">
-                  <ArrowUpRight size={18} />
-                </div>
-
-                {/* Bottom Overlay Title & Tag */}
-                <div className="gallery-info-bottom">
-                  {item.tag && <span className="gallery-mini-tag">{item.tag}</span>}
-                  <h3 className="gallery-card-title">{item.title}</h3>
-                  {item.subtitle && <p className="gallery-card-subtitle">{item.subtitle}</p>}
-                </div>
-              </div>
-            )
-          })}
-        </div>
+            })}
+          </div>
+        )}
       </div>
 
       {/* Interactive Lightbox Modal */}
@@ -325,9 +402,10 @@ export default function Gallery() {
                 ) : activeItem.type === 'video' ? (
                   <div className="gallery-modal-video-box">
                     <img
-                      src={activeItem.image}
+                      src={getImageUrl(activeItem.image)}
                       alt={activeItem.alt}
                       className="gallery-modal-img"
+                      onError={handleImageError}
                     />
                     <div className="gallery-modal-video-overlay">
                       <div className="gallery-modal-play-pulse">
@@ -340,9 +418,10 @@ export default function Gallery() {
                   </div>
                 ) : (
                   <img
-                    src={activeItem.image}
+                    src={getImageUrl(activeItem.image)}
                     alt={activeItem.alt}
                     className="gallery-modal-img"
+                    onError={handleImageError}
                   />
                 )}
               </div>

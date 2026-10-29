@@ -29,6 +29,17 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 // Serve uploaded media files
 app.use('/uploads', express.static(uploadsDir))
+const distUploads = path.resolve(__dirname, '../../dist/uploads')
+if (fs.existsSync(distUploads)) {
+  app.use('/uploads', express.static(distUploads))
+}
+
+// Backward-compatible fallback for legacy /src/assets paths
+const assetsDir = path.resolve(__dirname, '../../src/assets')
+if (fs.existsSync(assetsDir)) {
+  app.use('/src/assets', express.static(assetsDir))
+}
+app.use('/src/assets', express.static(uploadsDir))
 
 // API routes
 app.use('/api', apiRoutes)
@@ -37,8 +48,12 @@ app.use('/api', apiRoutes)
 const dist = path.resolve(__dirname, '../../dist')
 app.use(express.static(dist))
 app.get('*', (req: Request, res: Response, next: NextFunction) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
-    return next()
+  if (
+    req.path.startsWith('/api') ||
+    req.path.startsWith('/uploads') ||
+    req.path.startsWith('/src/assets')
+  ) {
+    return res.status(404).json({ ok: false, error: 'Resource not found' })
   }
   res.sendFile(path.join(dist, 'index.html'), (err) => {
     if (err) next()

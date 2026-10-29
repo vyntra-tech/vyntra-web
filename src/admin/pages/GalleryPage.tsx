@@ -25,6 +25,7 @@ import { galleryApi } from '../../services/api'
 import { ConfirmModal } from '../components/ConfirmModal'
 import { useAuth } from '../../context/AuthContext'
 import type { GalleryItem } from '../../types'
+import { getImageUrl } from '../../lib/image'
 
 export function GalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([])
@@ -207,7 +208,7 @@ export function GalleryPage() {
           <Card key={item.id || item.title} overflow="hidden">
             <Box position="relative" h="180px" bg="#0B1020">
               {item.image ? (
-                <Image src={item.image} w="full" h="full" objectFit="cover" alt={item.alt || item.title} />
+                <Image src={getImageUrl(item.image)} w="full" h="full" objectFit="cover" alt={item.alt || item.title} />
               ) : (
                 <Flex w="full" h="full" align="center" justify="center" direction="column">
                   <ImageIcon size={32} color="#6D28D9" />

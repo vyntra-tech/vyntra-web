@@ -10,9 +10,10 @@ import {
   Sparkles,
 } from 'lucide-react'
 import vyntraLogo from '../assets/vyntra-logo.png'
-
+import { useContent } from '../context/ContentContext'
 
 export default function Footer() {
+  const { settings, content } = useContent()
   const footerRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const textContainerRef = useRef<HTMLDivElement>(null)
@@ -255,19 +256,19 @@ export default function Footer() {
             <div className="footer-contact-info">
               <div className="footer-contact-item">
                 <span className="footer-contact-label">Direct Helpline:</span>
-                <a href="tel:+919131648013" className="footer-contact-value footer-link-highlight">
-                  +91 99774 13362
+                <a href={`tel:${(settings?.phone || '+919977413362').replace(/\s+/g, '')}`} className="footer-contact-value footer-link-highlight">
+                  {settings?.phone || '+91 99774 13362'}
                 </a>
               </div>
               <div className="footer-contact-item">
                 <span className="footer-contact-label">Direct Email:</span>
-                <a href="mailto:hellow.vyntra@gmail.com" className="footer-contact-value footer-link-highlight">
-                  hellow.vyntra@gmail.com
+                <a href={`mailto:${settings?.contactEmail || 'hellow.vyntra@gmail.com'}`} className="footer-contact-value footer-link-highlight">
+                  {settings?.contactEmail || 'hellow.vyntra@gmail.com'}
                 </a>
               </div>
               <div className="footer-contact-item">
                 <span className="footer-contact-label">Location:</span>
-                <span className="footer-contact-value">India · Indore Madhya Pradesh</span>
+                <span className="footer-contact-value">{settings?.address || 'India · Indore Madhya Pradesh'}</span>
               </div>
             </div>
           </div>

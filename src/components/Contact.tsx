@@ -18,8 +18,8 @@ import {
   FormErrorMessage,
   Button,
 } from './ChakraUI'
+import { contactApi } from '../services/api'
 
-const API = import.meta.env.VITE_API_URL ?? '/api/contact'
 const CONFIGURED_PHONE = (
   import.meta.env.VITE_WHATSAPP_NUMBER ||
   import.meta.env.VITE_COMPANY_PHONE ||
@@ -277,19 +277,7 @@ export default function Contact() {
     }
 
     try {
-      const res = await fetch(API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-
-      const json = await res.json().catch(() => ({}))
-
-      if (!res.ok || json.ok === false) {
-        throw new Error(
-          json.error || 'Your message could not be sent. Please try again.'
-        )
-      }
+      await contactApi.submit(payload)
 
       // Success confirmed by backend
       setStatus({

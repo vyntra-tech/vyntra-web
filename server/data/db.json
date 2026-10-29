@@ -452,78 +452,7 @@
       "order": 5
     }
   ],
-  "testimonials": [
-    {
-      "id": "rev-2",
-      "name": "Priya Patel",
-      "role": "Head of Product",
-      "company": "UniBill Pro",
-      "initials": "PP",
-      "rating": 5,
-      "review": "They architected a scalable SaaS billing platform that easily handles tens of thousands of daily transactions with zero downtime.",
-      "project": "Billing SaaS Platform",
-      "tag": "SaaS Engineering",
-      "avatar": "",
-      "status": "published",
-      "order": 2
-    },
-    {
-      "id": "rev-3",
-      "name": "Rohan Deshmukh",
-      "role": "Managing Director",
-      "company": "Purulia Travels",
-      "initials": "RD",
-      "rating": 5,
-      "review": "The team delivered a modern, lightning-fast UI that our travelers love. Punctual, responsive, and reliable execution throughout.",
-      "project": "Travel & Tourism Portal",
-      "tag": "UI/UX & Frontend",
-      "avatar": "",
-      "status": "published",
-      "order": 3
-    },
-    {
-      "id": "rev-4",
-      "name": "Sneha Gupta",
-      "role": "Co-Founder",
-      "company": "Hangry Delivery",
-      "initials": "SG",
-      "rating": 5,
-      "review": "Engineered our MVP in record time with zero compromise on code quality. Their proactive approach gave us a real competitive edge.",
-      "project": "Food Delivery Platform",
-      "tag": "MVP Development",
-      "avatar": "",
-      "status": "published",
-      "order": 4
-    },
-    {
-      "id": "rev-5",
-      "name": "Vikram Malhotra",
-      "role": "CEO",
-      "company": "NexaFlow AI",
-      "initials": "VM",
-      "rating": 5,
-      "review": "Rare engineers who understand both cutting-edge AI integrations and pixel-perfect design. They act as true product partners.",
-      "project": "AI Workflow Automation",
-      "tag": "AI Solutions",
-      "avatar": "",
-      "status": "published",
-      "order": 5
-    },
-    {
-      "id": "rev-6",
-      "name": "Ananya Roy",
-      "role": "VP of Technology",
-      "company": "PayZenith",
-      "initials": "AR",
-      "rating": 5,
-      "review": "Elite engineering standards. From database optimization to fluid micro-animations, every single screen reflects excellence.",
-      "project": "Fintech Portal",
-      "tag": "Scalable Systems",
-      "avatar": "",
-      "status": "published",
-      "order": 6
-    }
-  ],
+  "testimonials": [],
   "products": [
     {
       "id": "prod-1",
@@ -585,89 +514,89 @@
   ],
   "gallery": [
     {
-      "title": "shubham",
+      "title": "Vyntra Solutions_ Innovation in Motion",
       "subtitle": "",
       "category": "community",
       "type": "image",
-      "image": "/uploads/1792732195458-shubham_jpg.jpg",
+      "image": "/uploads/1793244525543-Vyntra_Solutions__Innovation_in_Motion.png",
       "videoUrl": "",
       "tag": "MEDIA UPLOAD",
       "caption": "",
-      "alt": "shubham.jpg",
-      "uploadedAt": "2026-10-23T05:10:03.692Z",
-      "id": "item-1792732203692-0f2dad49",
-      "createdAt": "2026-10-23T05:10:03.693Z",
-      "updatedAt": "2026-10-23T05:10:03.693Z"
+      "alt": "Vyntra Solutions_ Innovation in Motion.png",
+      "uploadedAt": "2026-10-29T03:28:45.723Z",
+      "id": "item-1793244525723-7304b129",
+      "createdAt": "2026-10-29T03:28:45.723Z",
+      "updatedAt": "2026-10-29T03:28:45.723Z"
     },
     {
-      "id": "placement-story",
-      "title": "From Campus to Product Engineer",
-      "subtitle": "Placement & Career Journey",
-      "category": "story",
-      "type": "video",
-      "image": "/src/assets/gallery/student_story.jpg",
-      "tag": "ANOTHER PLACEMENT FROM VYNTRA",
-      "caption": "Candid video interview sharing how hands-on coding transformed theoretical knowledge into production-ready software engineering.",
-      "alt": "Placement success story of a young engineer at VYNTRA",
-      "uploadedAt": "2026-01-10T11:00:00.000Z"
-    },
-    {
-      "id": "sprint-celebration",
-      "title": "Celebrating Sprint Milestones",
-      "subtitle": "Sweet moments with our developer cohort",
-      "category": "celebration",
-      "type": "image",
-      "image": "/src/assets/gallery/team_celebration.jpg",
-      "tag": "MILESTONE CELEBRATIONS",
-      "caption": "Festive treats and shared laughter following a successful multi-tenant SaaS delivery sprint.",
-      "alt": "VYNTRA team celebrating sprint milestone with festive sweets in modern office",
-      "uploadedAt": "2026-01-18T16:30:00.000Z"
-    },
-    {
-      "id": "founders-studio",
-      "title": "Collaborative Innovation",
-      "subtitle": "Lead Architects in the Studio",
+      "title": "Vyntra Solutions Team Celebration",
+      "subtitle": "",
       "category": "community",
       "type": "image",
-      "image": "/src/assets/gallery/founders_duo.jpg",
-      "tag": "STUDIO LIFE",
-      "caption": "Daily standup and architecture brainstorm session in the startup tech bay.",
-      "alt": "VYNTRA engineers smiling in front of creative tech workspace",
-      "uploadedAt": "2026-01-22T09:15:00.000Z"
+      "image": "/uploads/1793244442493-Vyntra_Solutions_Team_Celebration.png",
+      "videoUrl": "",
+      "tag": "MEDIA UPLOAD",
+      "caption": "",
+      "alt": "Vyntra Solutions Team Celebration.png",
+      "uploadedAt": "2026-10-29T03:27:22.787Z",
+      "id": "item-1793244442787-5626da3a",
+      "createdAt": "2026-10-29T03:27:22.787Z",
+      "updatedAt": "2026-10-29T03:27:22.787Z"
     },
     {
-      "id": "mentorship-moment",
-      "title": "Mentorship & Recognition",
-      "subtitle": "Pair programming and mutual wins",
-      "category": "mentorship",
-      "type": "image",
-      "image": "/src/assets/gallery/mentorship_moment.jpg",
-      "tag": "PEER MENTORSHIP",
-      "caption": "Celebrating personal growth, code reviews, and project breakthroughs together.",
-      "alt": "Engineers celebrating mentorship achievement with coffee and cake",
-      "uploadedAt": "2026-02-05T14:00:00.000Z"
-    },
-    {
-      "id": "community-cohort",
-      "title": "The VYNTRA Developer Family",
-      "subtitle": "Builders, engineers, and creators united",
+      "title": "Vyntra Team Brainstorming Session-2",
+      "subtitle": "",
       "category": "community",
       "type": "image",
-      "image": "/src/assets/gallery/community_group.jpg",
-      "tag": "COMMUNITY & COHORT",
-      "caption": "A united collective of builders pushing boundaries and shipping modern software products together.",
-      "alt": "VYNTRA engineering community cohort standing together smiling in office",
-      "uploadedAt": "2026-02-12T18:00:00.000Z"
+      "image": "/uploads/1793244304359-Vyntra_Team_Brainstorming_Session-2.png",
+      "videoUrl": "",
+      "tag": "MEDIA UPLOAD",
+      "caption": "",
+      "alt": "Vyntra Team Brainstorming Session-2.png",
+      "uploadedAt": "2026-10-29T03:25:04.659Z",
+      "id": "item-1793244304659-d4434300",
+      "createdAt": "2026-10-29T03:25:04.659Z",
+      "updatedAt": "2026-10-29T03:25:04.659Z"
+    },
+    {
+      "title": "Vyntra Solutions Team Collaboration",
+      "subtitle": "",
+      "category": "community",
+      "type": "image",
+      "image": "/uploads/1793244226177-Vyntra_Solutions_Team_Collaboration.png",
+      "videoUrl": "",
+      "tag": "MEDIA UPLOAD",
+      "caption": "",
+      "alt": "Vyntra Solutions Team Collaboration.png",
+      "uploadedAt": "2026-10-29T03:23:46.320Z",
+      "id": "item-1793244226320-e2df4d97",
+      "createdAt": "2026-10-29T03:23:46.320Z",
+      "updatedAt": "2026-10-29T03:23:46.320Z"
+    },
+    {
+      "title": "Vyntra Solutions Modern Office",
+      "subtitle": "",
+      "category": "community",
+      "type": "image",
+      "image": "/uploads/1793244153208-Vyntra_Solutions_Modern_Office.png",
+      "videoUrl": "",
+      "tag": "MEDIA UPLOAD",
+      "caption": "",
+      "alt": "Vyntra Solutions Modern Office.png",
+      "uploadedAt": "2026-10-29T03:22:33.386Z",
+      "id": "item-1793244153387-49e8e4c4",
+      "createdAt": "2026-10-29T03:22:33.387Z",
+      "updatedAt": "2026-10-29T03:22:33.387Z"
     }
   ],
   "content": {
     "hero": {
-      "tagline": "BUILD. DEPLOY. SCALE.",
-      "title": "We turn ambitious ideas into digital reality.",
-      "subtitle": "VYNTRA Solutions designs, engineers, and scales AI-powered software, cloud infrastructure, and modern digital platforms for forward-thinking enterprises.",
-      "primaryCtaLabel": "Explore Services",
-      "primaryCtaUrl": "#services",
-      "secondaryCtaLabel": "Get In Touch",
+      "tagline": "Build. Deploy. Scale. · AI, Cloud & Software",
+      "title": "We turn ideas into digital experiences.",
+      "subtitle": "From custom software, AI-powered solutions, and cloud architectures to scalable digital products, VYNTRA Solutions helps businesses transform ideas into meaningful technology.",
+      "primaryCtaLabel": "Explore Our Work",
+      "primaryCtaUrl": "#work",
+      "secondaryCtaLabel": "Start a Project",
       "secondaryCtaUrl": "#contact"
     },
     "about": {
@@ -691,7 +620,7 @@
       "ctaText": "Let's Talk",
       "ctaHref": "#contact",
       "video": {
-        "src": "",
+        "src": "/uploads/about-vedeio.mp4",
         "poster": "",
         "caption": "Meet VYNTRA"
       }
@@ -747,6 +676,246 @@
     }
   ],
   "activity": [
+    {
+      "id": "act-1793244525729-bcc490",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: Vyntra Solutions_ Innovation in Motion",
+      "details": "Type: image",
+      "timestamp": "2026-10-29T03:28:45.729Z"
+    },
+    {
+      "id": "act-1793244525549-b9bdf1",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1793244525543-Vyntra_Solutions__Innovation_in_Motion.png",
+      "details": "2200.9 KB",
+      "timestamp": "2026-10-29T03:28:45.549Z"
+    },
+    {
+      "id": "act-1793244442793-bb34bb",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: Vyntra Solutions Team Celebration",
+      "details": "Type: image",
+      "timestamp": "2026-10-29T03:27:22.793Z"
+    },
+    {
+      "id": "act-1793244442502-525490",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1793244442493-Vyntra_Solutions_Team_Celebration.png",
+      "details": "2377.1 KB",
+      "timestamp": "2026-10-29T03:27:22.502Z"
+    },
+    {
+      "id": "act-1793244336775-f6485b",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: item-1793244292568-53d1bb6d",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:25:36.775Z"
+    },
+    {
+      "id": "act-1793244304668-f00654",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: Vyntra Team Brainstorming Session-2",
+      "details": "Type: image",
+      "timestamp": "2026-10-29T03:25:04.669Z"
+    },
+    {
+      "id": "act-1793244304365-2e9741",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1793244304359-Vyntra_Team_Brainstorming_Session-2.png",
+      "details": "2059.6 KB",
+      "timestamp": "2026-10-29T03:25:04.365Z"
+    },
+    {
+      "id": "act-1793244292572-b9f963",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: Vyntra Team Brainstorming Session-2",
+      "details": "Type: image",
+      "timestamp": "2026-10-29T03:24:52.572Z"
+    },
+    {
+      "id": "act-1793244292384-8695a1",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1793244292375-Vyntra_Team_Brainstorming_Session-2.png",
+      "details": "2059.6 KB",
+      "timestamp": "2026-10-29T03:24:52.384Z"
+    },
+    {
+      "id": "act-1793244226324-157ba9",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: Vyntra Solutions Team Collaboration",
+      "details": "Type: image",
+      "timestamp": "2026-10-29T03:23:46.324Z"
+    },
+    {
+      "id": "act-1793244226186-efc713",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1793244226177-Vyntra_Solutions_Team_Collaboration.png",
+      "details": "2087.6 KB",
+      "timestamp": "2026-10-29T03:23:46.186Z"
+    },
+    {
+      "id": "act-1793244153390-47dc33",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_ADDED",
+      "target": "Media: Vyntra Solutions Modern Office",
+      "details": "Type: image",
+      "timestamp": "2026-10-29T03:22:33.390Z"
+    },
+    {
+      "id": "act-1793244153215-ce44e7",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "MEDIA_UPLOADED",
+      "target": "File: 1793244153208-Vyntra_Solutions_Modern_Office.png",
+      "details": "2145.8 KB",
+      "timestamp": "2026-10-29T03:22:33.216Z"
+    },
+    {
+      "id": "act-1793243959678-f8dc40",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: community-cohort",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:19:19.678Z"
+    },
+    {
+      "id": "act-1793243956610-50c34f",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: founders-studio",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:19:16.611Z"
+    },
+    {
+      "id": "act-1793243953656-6be2d0",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: mentorship-moment",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:19:13.656Z"
+    },
+    {
+      "id": "act-1793243950742-0bb2c8",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: sprint-celebration",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:19:10.742Z"
+    },
+    {
+      "id": "act-1793243946060-bfd1e0",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: placement-story",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:19:06.061Z"
+    },
+    {
+      "id": "act-1793243932454-3fc5e0",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "GALLERY_ITEM_DELETED",
+      "target": "Media ID: item-1792732203692-0f2dad49",
+      "details": "Deleted media",
+      "timestamp": "2026-10-29T03:18:52.455Z"
+    },
+    {
+      "id": "act-1793243886891-696748",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TESTIMONIAL_DELETED",
+      "target": "Testimonial ID: rev-6",
+      "details": "Deleted review",
+      "timestamp": "2026-10-29T03:18:06.891Z"
+    },
+    {
+      "id": "act-1793243167222-2dd308",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TESTIMONIAL_DELETED",
+      "target": "Testimonial ID: rev-5",
+      "details": "Deleted review",
+      "timestamp": "2026-10-29T03:06:07.222Z"
+    },
+    {
+      "id": "act-1793243162687-4a9e3a",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TESTIMONIAL_DELETED",
+      "target": "Testimonial ID: rev-4",
+      "details": "Deleted review",
+      "timestamp": "2026-10-29T03:06:02.687Z"
+    },
+    {
+      "id": "act-1793243159837-bbfb72",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TESTIMONIAL_DELETED",
+      "target": "Testimonial ID: rev-3",
+      "details": "Deleted review",
+      "timestamp": "2026-10-29T03:05:59.837Z"
+    },
+    {
+      "id": "act-1793243156704-df5907",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "TESTIMONIAL_DELETED",
+      "target": "Testimonial ID: rev-2",
+      "details": "Deleted review",
+      "timestamp": "2026-10-29T03:05:56.704Z"
+    },
+    {
+      "id": "act-1793243127718-0def7a",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-29T03:05:27.719Z"
+    },
+    {
+      "id": "act-1793242029444-c82820",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "CONTENT_UPDATED",
+      "target": "Website Content",
+      "details": "Updated CMS sections",
+      "timestamp": "2026-10-29T02:47:09.448Z"
+    },
+    {
+      "id": "act-1793241971019-feb9fc",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-29T02:46:11.020Z"
+    },
+    {
+      "id": "act-1793241381991-f660bc",
+      "actor": "Chandrabhan Gadeshwar",
+      "action": "CONTENT_UPDATED",
+      "target": "Website Content",
+      "details": "Updated CMS sections",
+      "timestamp": "2026-10-29T02:36:21.992Z"
+    },
+    {
+      "id": "act-1793241302537-77d2fe",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-29T02:35:02.537Z"
+    },
+    {
+      "id": "act-1793199352612-833519",
+      "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",
+      "action": "AUTH_LOGIN",
+      "target": "Admin Portal",
+      "details": "Logged in as admin",
+      "timestamp": "2026-10-28T14:55:52.612Z"
+    },
     {
       "id": "act-1792821415367-ca623c",
       "actor": "Chandrabhan Gadeshwar (admin@vyntra.tech)",

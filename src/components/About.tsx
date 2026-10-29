@@ -1,22 +1,38 @@
 import { useState, useRef, useEffect } from 'react'
 import { ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react'
-import { aboutContent } from '../data/about'
+import { useContent } from '../context/ContentContext'
+import { getImageUrl } from '../lib/image'
 import vyntraLogo from '../assets/vyntra-logo.png'
 
+
 export default function About() {
-  const { label, heading, description, stats, ctaText, ctaHref, video } = aboutContent
+  const { content } = useContent()
+  const about = content?.about
+
+  const label = about?.label || 'ABOUT VYNTRA'
+  const heading = about?.heading || 'We Build Digital Products That Matter.'
+  const description =
+    about?.description ||
+    'VYNTRA Solutions helps startups and enterprises build modern web applications, scalable cloud solutions, and AI-powered software through thoughtful design and reliable engineering.'
+  const stats = about?.stats || []
+  const ctaText = about?.ctaText || "Let's Talk"
+  const ctaHref = about?.ctaHref || '#contact'
+  const videoSrc = getImageUrl(about?.video?.src) || '/uploads/about-vedeio.mp4'
+  const videoPoster = getImageUrl(about?.video?.poster)
+  const videoCaption = about?.video?.caption || 'Meet VYNTRA'
+
   const [isPlaying, setIsPlaying] = useState(true)
   const [isMuted, setIsMuted] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    if (videoRef.current && video.src) {
+    if (videoRef.current && videoSrc) {
       videoRef.current.play().catch(() => {
         // Fallback if browser requires interaction
         setIsPlaying(false)
       })
     }
-  }, [video.src])
+  }, [videoSrc])
 
   const togglePlay = () => {
     if (!videoRef.current) return
@@ -87,12 +103,12 @@ export default function About() {
           <div className="about-right-col">
             <div className="about-video-card">
               <div className="about-video-container">
-                {video.src ? (
+                {videoSrc ? (
                   <>
                     <video
                       ref={videoRef}
-                      src={video.src}
-                      poster={video.poster}
+                      src={videoSrc}
+                      poster={videoPoster || undefined}
                       autoPlay
                       loop
                       muted={isMuted}
@@ -149,7 +165,7 @@ export default function About() {
                     {/* Video Caption at Bottom-Left */}
                     <div className="about-video-caption">
                       <span className="caption-dot" aria-hidden="true" />
-                      <span>{video.caption}</span>
+                      <span>{videoCaption}</span>
                     </div>
 
                     {/* Interactive Controls at Bottom-Right */}
@@ -205,7 +221,7 @@ export default function About() {
                       <span className="about-video-wordmark">VYNTRA</span>
                     </div>
                     <div className="about-video-hint" role="status" aria-live="polite">
-                      <span>Video source configurable in src/data/about.ts</span>
+                      <span>Video source configurable in Admin Content CMS</span>
                     </div>
                   </div>
                 )}

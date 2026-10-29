@@ -893,9 +893,21 @@ app.put('/api/admin/settings', authenticateToken, requireRole(['admin']), (req, 
 
 const dist = path.join(__dirname, '..', 'dist')
 app.use(express.static(dist))
+
+// Backward-compatible fallback for legacy /src/assets paths
+const assetsDir = path.join(__dirname, '..', 'src', 'assets')
+if (fs.existsSync(assetsDir)) {
+  app.use('/src/assets', express.static(assetsDir))
+}
+app.use('/src/assets', express.static(uploadsDir))
+
 app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
-    return next()
+  if (
+    req.path.startsWith('/api') ||
+    req.path.startsWith('/uploads') ||
+    req.path.startsWith('/src/assets')
+  ) {
+    return res.status(404).json({ ok: false, error: 'Resource not found' })
   }
   res.sendFile(path.join(dist, 'index.html'), (err) => {
     if (err) next()

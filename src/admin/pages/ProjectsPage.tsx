@@ -43,6 +43,7 @@ import { projectsApi, galleryApi } from '../../services/api'
 import { ConfirmModal } from '../components/ConfirmModal'
 import { useAuth } from '../../context/AuthContext'
 import type { Showcase } from '../../types'
+import { getImageUrl } from '../../lib/image'
 
 const CATEGORIES = [
   'Web Applications',
@@ -348,7 +349,7 @@ export function ProjectsPage() {
                     <Td>
                       <HStack spacing={3}>
                         {proj.image ? (
-                          <Image src={proj.image} boxSize="36px" borderRadius="md" objectFit="cover" alt={proj.name} />
+                          <Image src={getImageUrl(proj.image)} boxSize="36px" borderRadius="md" objectFit="cover" alt={proj.name} />
                         ) : (
                           <Box boxSize="36px" borderRadius="md" bg="brand.900" display="flex" alignItems="center" justifyContent="center">
                             <Text fontSize="xs" fontWeight="700" color="brand.300">
@@ -583,7 +584,7 @@ export function ProjectsPage() {
                     onChange={handleImageUpload}
                   />
                   {formData.image && (
-                    <Image src={formData.image} boxSize="40px" borderRadius="md" objectFit="cover" />
+                    <Image src={getImageUrl(formData.image)} boxSize="40px" borderRadius="md" objectFit="cover" />
                   )}
                 </HStack>
               </FormControl>
