@@ -1,0 +1,19 @@
+services:
+  vyntra:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vyntra-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - vyntra-uploads:/app/public/uploads
+
+volumes:
+  vyntra-uploads:
